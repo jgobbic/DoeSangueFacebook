@@ -1,0 +1,15 @@
+login_homepage:
+    path: index/
+    defaults: { _controller: loginBundle:Default:index }
+login_about:
+    path: about/
+    defaults: { _controller: loginBundle:Default:about }
+login_login:
+    path: login/
+    defaults: { _controller: loginBundle:Default:login }
+login_doadorreg:
+    path: register_d/
+    defaults: { _controller: loginBundle:Default:doadorreg }
+login_entidadereg:
+    path: register_e/
+    defaults: { _controller: loginBundle:Default:entidadereg }
