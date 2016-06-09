@@ -1,4 +1,3 @@
-
 --
 -- Banco de Dados: `sqlstudy`
 --
@@ -75,3 +74,38 @@ CREATE
     PRIMARY KEY ( ID )
   ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Estrutura da tabela `PRESENCA`
+--
+
+CREATE
+  TABLE IF NOT EXISTS `presenca`
+  (
+    ID     				INTEGER		  NOT NULL AUTO_INCREMENT,  
+    IDEVENTO				VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
+    IDDOADOR     			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
+    PRIMARY KEY ( ID )
+  ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+ALTER TABLE `presenca` ADD CONSTRAINT `fk_evento_id` FOREIGN KEY ( `IDEVENTO` ) REFERENCES `evento` ( `ID` ) ;
+ 
+ALTER TABLE `presenca` ADD CONSTRAINT `fk_doador_id` FOREIGN KEY ( `IDDOADOR` ) REFERENCES `doador` ( `ID` ) ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `EVENTOCREDENCIAIS`
+--
+
+CREATE
+  TABLE IF NOT EXISTS `eventocred`
+  (
+    ID     				INTEGER		  NOT NULL AUTO_INCREMENT,  
+    IDEVENTO				VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
+    IDENTIDADE     			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
+    PRIMARY KEY ( ID )
+  ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+ALTER TABLE `eventocred` ADD CONSTRAINT `fk_evento_id` FOREIGN KEY ( `IDEVENTO` ) REFERENCES `evento` ( `ID` ) ;
+ 
+ALTER TABLE `eventocred` ADD CONSTRAINT `fk_entidade_id` FOREIGN KEY ( `IDENTIDADE` ) REFERENCES `entidade` ( `ID` ) ;
