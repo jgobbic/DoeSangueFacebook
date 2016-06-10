@@ -1,0 +1,40 @@
+Para o projeto funcionar:
+
+Settar o HTDOCS  do XAMPP em final (projeto) -> propriedades -> web (settar para o path do htdocs do xampp do seu pc)
+Settar a pasta do projeto e pasta do src (a mesma pros dois e é a pasta até o projeto\final)
+Conferir que a pasta da aplicação é 'app' em Symfony2 (nas mesmas propriedades) e que ele está ativado.
+Pode ignorar o warning de erro no 'vendor'.
+Se pá precisa limpar a cache do BD pra funcionar, se procurar na internet acha fácil (procurar pelo erro, obviamente)
+Provavelmente ele vai pedir pra settar o symfony e o php (pro php vc seleciona o php.exe do xampp na aba certa lá, pro do symfony pergunta pro gobbi).
+____________
+Ligar Apache - Mysql pelo XAMPP
+NetBeans -> Abrir Projeto -> final
+______
+ir em localhost -> phpmyadmin -> criar um BD chamado sqlstudy e rodar o initializeBD.
+Rodando initializeBD -> Entra em localhost -> Entra no BD (sqlstudy) -> aba SQL (SEGUNDA ABA) -> ctrl+c ctrl+v no texto e roda o codigo (Executar) (SE ELE SALVAR AS TABELAS COM NOME MAIUSCULO, TROCAR POR MINUSCULO NO CREATE TABLE E RODAR O CODIGO DE NOVO (e dar um drop com o nome maiusculo tb, pra tirar elas antes))
+
+doador -> Tabela do Doador
+entidade -> idem
+evento -> idem
+eventocred -> Credenciais do Evento (Relação Evento-Entidade) (A entidade possui o evento)
+presenca -> Confirmação do usuário no evento (Relação Doador-Evento) (O doador participa do Evento)
+______
+ROUTING
+
+Arquivo fica em src->main->loginBundle->Resources->config->ROUTING.YML
+Exemplo de path:    http://localhost/nomedoprojeto/web/app_dev.php/routepath
+Exemplo no projeto: http://localhost/final/web/app_dev.php/index/
+
+Responde passando um parametro pra dentro do Controller:
+loginBundle:Default:entidadereg -> devolvo para dentro do loginBundle no Controlador Default o parametro 'entidadereg'
+loginBundle:Doador:about -> devolvo para dentro do loginBundle no Controlador Doador o parametro 'about'
+e no controlador precisa de uma função "parametroAction" pra receber esse parametro
+______
+HTML
+As paginas fica em src->main->loginBundle->Resources->views
+______
+CONTROLLER
+
+Request -> para utilizar métodos (colocar como parametro dentro da função Action)
+
+Funções do Symfony começam com $this->AlgumMétodoDoSymfony
