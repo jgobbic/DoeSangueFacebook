@@ -4,9 +4,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Work/Documents/final/src/Main/loginBundle/Controller/DefaultController.php</file>
-            <file>file:/C:/Users/Work/Documents/final/src/Main/loginBundle/Resources/views/Default/formdoador.html.twig</file>
+            <file>file:/C:/Users/Work/Documents/final/src/Main/loginBundle/Resources/views/Default/confirmarpresenca.html.twig</file>
+            <file>file:/C:/Users/Work/Documents/final/src/Main/loginBundle/Controller/DoadorController.php</file>
             <file>file:/C:/Users/Work/Documents/final/src/Main/loginBundle/Resources/config/routing.yml</file>
-            <file>file:/C:/Users/Work/Documents/final/src/Main/loginBundle/Entity/Doador.php</file>
         </group>
     </open-files>
 </project-private>

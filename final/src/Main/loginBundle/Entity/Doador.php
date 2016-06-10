@@ -12,6 +12,16 @@ class Doador
     /**
      * @var string
      */
+    private $password;
+
+    /**
+     * @var string
+     */
+    private $username;
+
+    /**
+     * @var string
+     */
     private $tiposangue;
 
     /**
@@ -49,6 +59,52 @@ class Doador
      */
     private $id;
 
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return Doador
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return Doador
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string 
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
 
     /**
      * Set tiposangue
