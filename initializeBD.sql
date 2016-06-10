@@ -2,9 +2,11 @@
 -- Banco de Dados: `sqlstudy`
 --
 
-DROP TABLE IF EXISTS `DOADOR`;
-DROP TABLE IF EXISTS `ENTIDADE`;
-DROP TABLE IF EXISTS `EVENTO`;
+DROP TABLE IF EXISTS `doador`;
+DROP TABLE IF EXISTS `entidade`;
+DROP TABLE IF EXISTS `evento`;
+DROP TABLE IF EXISTS `presenca`;
+DROP TABLE IF EXISTS `eventocred`;
 
 -- --------------------------------------------------------
 
