@@ -47,7 +47,7 @@ class DefaultController extends Controller
     public function eventolistaAction()
     {
         $session=$this->getRequest()->getSession();
-        if($session->has('login_entidade'))
+        if($session->has('login_entidade')) // if isLogged praticamente
         {
             $login = $session->get('login_entidade');
             $email = $login->getUsername();
@@ -58,7 +58,7 @@ class DefaultController extends Controller
             $id=$entidade->getID();
             $eventocredss = $em->getRepository('loginBundle:Eventocred');
             $eventocreds = $eventocredss->findBy(array('identidade'=>$id));
-            if($eventocreds)
+            if($eventocreds) // se a entidade possui eventos
             {    
                 $arr = $this->bdhandling($eventocreds);
             }
@@ -66,7 +66,7 @@ class DefaultController extends Controller
             { 
                 $arr=array();
             }
-            return $this->render('loginBundle:Default:listaevento.html.twig', array('eventos' => $arr) );
+            return $this->render('loginBundle:Default:listaevento.html.twig', array('logged' => 'logged', 'eventos' => $arr) );
         }
         else
         {
@@ -76,86 +76,79 @@ class DefaultController extends Controller
     
     public function loginAction(Request $request)
     {
-        $session=$this->getRequest()->getSession();
-        if($request->getMethod()=='POST')
+        if(!($this->isLogged())) // se nao esta logado
         {
-            $session->clear();
-            $email=$request->get('email');
-            $password=md5($request->get('password'));
-            $remember=$request->get('remember');
-            
-            $em = $this->getDoctrine()->getEntityManager();
-            $repository = $em->getRepository('loginBundle:Entidade'); 
-            $usr = $repository->findOneBy(array('email'=>$email,'password'=>$password));
-            
-            if($usr){
-                if($remember=='remember-me')
+            $session=$this->getRequest()->getSession();
+            if($request->getMethod()=='POST')
+            {
+                $session->clear();
+                $email=$request->get('email');
+                $password=md5($request->get('password'));
+                $em = $this->getDoctrine()->getEntityManager();
+                $repository = $em->getRepository('loginBundle:Entidade'); 
+                $usr = $repository->findOneBy(array('email'=>$email,'password'=>$password));
+                if($usr) // o usuario esta no BD
                 {
                     $login = new Login();
                     $login->setPassword($password);
                     $login->setUsername($email);
                     $session->set('login_entidade',$login);
+                    return $this->redirectToRoute('login_homepage');
                 }
-                return $this->render('loginBundle:Default:welcome.html.twig'); // red
+                else
+                {
+                    return $this->render('loginBundle:Default:loginuser.html.twig', array('name' => 'Login Error'));
+                }
             }
-            else
+            else // cara n deu post e n esta logado
             {
-                return $this->render('loginBundle:Default:loginuser.html.twig', array('name' => 'Login Error'));
+                return $this->render('loginBundle:Default:loginuser.html.twig');
             }
         }
         else
         {
-            if($session->has('login_entidade'))
-            {
-                $login = $session->get('login_entidade');
-                $email = $login->getUsername();
-                $password = $login->getPassword();
-                $em = $this->getDoctrine()->getEntityManager();
-                $repository = $em->getRepository('loginBundle:Entidade');
-                $usr = $repository->findOneBy(array('email'=>$email,'password'=>$password));
-                if($usr){
-                    return $this->render('loginBundle:Default:welcome.html.twig'); // red
-                }
-                else
-                {
-                    return $this->render('loginBundle:Default:loginuser.html.twig'); // wtf
-                }
-            }
-            else
-            {
-                return $this->render('loginBundle:Default:loginuser.html.twig');
-            }
-            
+            return $this->redirectToRoute('login_homepage'); // cara ja ta logado e esta tentando logar, wtf?
         }
     }
     
     public function entidaderegAction(Request $request)
     {
-        $entidade = new Entidade();
-        if($request->getMethod()=='POST')
+        if($this->isLogged())
         {
-            $cidade=$request->get('cidade');
-            $username=$request->get('username');
-            $password=md5($request->get('password'));
-            $cnpj=$request->get('cnpj');    
-            $email=$request->get('email');    
-            $descricao=$request->get('descricao'); 
-            
-            $entidade->setPassword($password);
-            $entidade->setCidade($cidade);
-            $entidade->setNome($username);
-            $entidade->setEmail($email);
-            $entidade->setIdfacebook("umidqualquer");
-            $entidade->setLinkfacebook("umlinkqualquer");
-            $entidade->setCnpj($cnpj);
-            $entidade->setDescricao($descricao);
-            
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entidade);
-            $em->flush();
-            return $this->render('loginBundle:Default:index.html.twig'); // red
+            return $this->redirectToRoute('login_homepage'); // cara ja ta logado e esta tentando registrar
         }
-        return $this->render('loginBundle:Default:formentidade.html.twig');
+        else
+        {
+            if($request->getMethod()=='POST')
+            {
+                $entidade = new Entidade();
+                $cidade=$request->get('cidade');
+                $username=$request->get('username');
+                $password=md5($request->get('password'));
+                $cnpj=$request->get('cnpj');    
+                $email=$request->get('email');    
+                $descricao=$request->get('descricao'); 
+
+                $entidade->setPassword($password);
+                $entidade->setCidade($cidade);
+                $entidade->setNome($username);
+                $entidade->setEmail($email);
+                $entidade->setIdfacebook("umidqualquer2");
+                $entidade->setLinkfacebook("umlinkqualquer2");
+                $entidade->setCnpj($cnpj);
+                $entidade->setDescricao($descricao);
+
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($entidade);
+                $em->flush();
+                return $this->redirectToRoute('login_login');
+            }
+            else
+            {
+                return $this->render('loginBundle:Default:formentidade.html.twig');
+            }
+            
+        } 
     }
     
     public function isLogged()
@@ -173,12 +166,11 @@ class DefaultController extends Controller
     
     public function eventoregAction(Request $request)
     {
-        $evento = new Evento();
-        if($request->getMethod()=='POST')
+        if($this->isLogged())
         {
-            $session=$this->getRequest()->getSession();
-            if($session->has('login_entidade'))
+            if($request->getMethod()=='POST')
             {
+                $evento = new Evento();
                 $cidade=$request->get('cidade');
                 $nome=$request->get('nome');
                 $rua=$request->get('rua');    
@@ -211,35 +203,38 @@ class DefaultController extends Controller
 
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($evento);
-                $em->flush();
-                
+                $em->flush(); // salva no BD
+
+                $session=$this->getRequest()->getSession();
                 $login = $session->get('login_entidade');
                 $email = $login->getUsername();
                 $em = $this->getDoctrine()->getEntityManager();
                 $repositoryEnt = $em->getRepository('loginBundle:Entidade'); 
                 $entidadeC = $repositoryEnt->findOneBy(array('email'=>$email)); 
-                $identidade=$entidadeC->getId();
-                
+                $identidade=$entidadeC->getId(); // pega no BD o ID da entidade
+
                 $repositoryEnt = $em->getRepository('loginBundle:Evento'); 
                 $eventoC = $repositoryEnt->findOneBy(array('linkfacebook'=>$linkfacebook)); 
-                $idevento=$eventoC->getId();
-                
+                $idevento=$eventoC->getId(); // pega no BD o ID do evento
+
                 $eventocredentials = new Eventocred();
                 $eventocredentials->setIdentidade($identidade);
                 $eventocredentials->setIdevento($idevento);
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($eventocredentials);
-                $em->flush();
+                $em->flush(); // salva no BD a relação
+
+                return $this->redirectToRoute('login_homepage');
                 
-                return $this->render('loginBundle:Default:index.html.twig'); // red
             }
-            else
-            {
-                return $this->render('loginBundle:Default:loginuser.html.twig'); // red
-            }
+            return $this->render('loginBundle:Default:formevento.html.twig', array('logged'=>'logged'));
         }
-        return $this->render('loginBundle:Default:formevento.html.twig');
+        else
+        {
+            return $this->redirectToRoute('login_homepage');
+        }
     }
+    
     public function eventoAction()
     {
         return $this->render('loginBundle:Default:index.html.twig'); // nao esta pronto
@@ -247,9 +242,15 @@ class DefaultController extends Controller
      
     public function aboutAction()
     {
-        $session=$this->getRequest()->getSession();
-        $session->clear();
-        return $this->render('loginBundle:Default:about.html.twig');  
+        if($this->isLogged())
+        {
+            return $this->render('loginBundle:Default:about.html.twig', array('logged'=>'logged'));  
+        }
+        else
+        {
+            return $this->render('loginBundle:Default:about.html.twig', array('logged'=>'notlogged'));  
+        }
+        
     }
 }
 
