@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS `eventocred`;
 --
 
 CREATE
-  TABLE IF NOT EXISTS `DOADOR`
+  TABLE IF NOT EXISTS `doador`
   (
     ID		            INTEGER NOT NULL AUTO_INCREMENT,
     PASSWORD			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,  
@@ -37,7 +37,7 @@ CREATE
 --
 
 CREATE
-  TABLE IF NOT EXISTS `ENTIDADE`
+  TABLE IF NOT EXISTS `entidade`
   (
     ID     				INTEGER		  NOT NULL AUTO_INCREMENT,  
     PASSWORD			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,  
@@ -56,7 +56,7 @@ CREATE
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `EVENTO`
+-- Estrutura da tabela `evento`
 --
 
 CREATE
