@@ -7,6 +7,9 @@ login_about:
 login_login:
     path: login/
     defaults: { _controller: loginBundle:Default:login }
+login_logout:
+    path: logout/
+    defaults: { _controller: loginBundle:Default:logout }
 login_entidadereg:
     path: register_entidade/
     defaults: { _controller: loginBundle:Default:entidadereg }

@@ -15,7 +15,21 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('loginBundle:Default:index.html.twig');
+        if($this->isLogged())
+        {
+            return $this->render('loginBundle:Default:index.html.twig', array('logged'=>'logged'));
+        }
+        else
+        {
+            return $this->render('loginBundle:Default:index.html.twig', array('logged'=>'notloggged'));
+        }
+    }
+    
+    public function logoutAction(Request $request)
+    {
+        $session=$request->getSession();
+        $session->clear();
+        return $this->redirectToRoute('login_homepage');        
     }
     
     public function bdhandling($eventocreds)
@@ -142,6 +156,19 @@ class DefaultController extends Controller
             return $this->render('loginBundle:Default:index.html.twig'); // red
         }
         return $this->render('loginBundle:Default:formentidade.html.twig');
+    }
+    
+    public function isLogged()
+    {
+        $session=$this->getRequest()->getSession();
+        if($session->has('login_entidade'))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     
     public function eventoregAction(Request $request)

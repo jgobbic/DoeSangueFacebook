@@ -29,7 +29,23 @@
 </head>
 
 <body>
-    
+    <table class="table table-striped table-bordered" border="0" celpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td>
+                    <div class="col-sm-2">
+                        <strong>Bem vindo.</strong>
+                    </div>
+                </td>
+                <td></td>
+                <td align="right">
+                    <div>
+                        <a href="{{path('login_logout')}}">Logout</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <div class="brand">#PARTIU Doar</div>
     <div class="address-bar">Aplicativo para auxiliar doação de sangue</div>
 
@@ -54,7 +70,7 @@
                         <a href="{{path('login_homepage')}}">Home</a>
                     </li>
                     <li>
-                        <a href="{{path('login_registerreg')}}">Nova Campanha</a>
+                        <a href="{{path('login_eventoreg')}}">Nova Campanha</a>
                     </li>
                     <li>
                         <a href="{{path('login_eventolista')}}">Minhas Campanhas</a>

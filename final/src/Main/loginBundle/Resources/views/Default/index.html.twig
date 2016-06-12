@@ -1,4 +1,7 @@
-{%extends "loginBundle:Default:basic.html.twig"%}
+{% extends logged == 'logged' 
+    ? 'loginBundle:Default:basicentidade.html.twig' 
+    : 'loginBundle:Default:basic.html.twig' %}
+        
 {%block container %}
     <div class="container">
 
@@ -15,11 +18,7 @@
 					</div>
 
 					<div class="col-lg-12">
-						<ul>
-							<li>
-								<a href="{{path('login_eventoreg')}}">Evento Registro</a>
-							</li>
-						</ul>
+						
 					</div>
                 <div class="clearfix"></div>
 
