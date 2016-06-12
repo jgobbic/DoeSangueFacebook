@@ -13,16 +13,38 @@ use Main\loginBundle\Entity\Eventocred;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
+    public function loginfacebookAction(Request $request)
+    {
+        if($request->getMethod()=='POST')
+        {
+            $session = $this->getRequest()->getSession();
+            $session->clear();
+            $username = $request->get('username');
+            $id = $request->get('id');
+            $login = new Login();
+            $login->setUsername($username);
+            $session->set('login_entidade',$login);
+            return $this->redirectToRoute('login_homepage');
+        }
+    }
+    
+    public function indexAction(Request $request)
     {
         if($this->isLogged())
         {
-            return $this->render('loginBundle:Default:index.html.twig', array('logged'=>'logged'));
+            return $this->render('loginBundle:Default:index.html.twig', array('logged' => 'logged'));
         }
         else
         {
-            return $this->render('loginBundle:Default:index.html.twig', array('logged'=>'notloggged'));
+            return $this->render('loginBundle:Default:index.html.twig', array('logged' => 'notlogged'));
         }
+    }
+    
+    public function testloginAction(Request $request)
+    {
+       
+        return $this->render('loginBundle:Default:testelogin2.html.twig');
+        
     }
     
     public function logoutAction(Request $request)

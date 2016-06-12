@@ -1,6 +1,12 @@
 login_homepage:
     path: index/
     defaults: { _controller: loginBundle:Default:index }
+login_login_facebook:
+    path: facebook/
+    defaults: { _controller: loginBundle:Default:loginfacebook }
+login_testlogin:
+    path: test/
+    defaults: { _controller: loginBundle:Default:testlogin }
 login_about:
     path: about/
     defaults: { _controller: loginBundle:Default:about }
