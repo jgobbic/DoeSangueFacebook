@@ -1,0 +1,41 @@
+{%extends "loginBundle:Default:basic.html.twig"%}
+{%block container %}
+    <div class="container">
+
+        <div class="row">
+            <div class="box">
+                <table class="table table-hover table-striped table-bordered text-center">
+                    <thead>
+                      <tr>
+                        <th class="text-center">Nome do Evento</th>
+                        <th class="text-center">Data Inicial</th>
+                        <th class="text-center">Data Final</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%for evento in eventos%}
+                            <tr>
+                                <td>{{evento.getNome()}}</td>
+                                <td>{{evento.getDatainicio().format('m-d')}}</td>
+                                <td>{{evento.getDatafim().format('m-d')}}</td>
+                                <td>
+                                    <button type="submit" class="btn btn-default">Página</button>
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-default">Editar</button>
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-default">Remover</button>
+                                </td>
+                             </tr>
+                        {%endfor%}
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+
+    </div>
+{%endblock%}

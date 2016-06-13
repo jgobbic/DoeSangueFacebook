@@ -1,0 +1,36 @@
+login_homepage:
+    path: index/
+    defaults: { _controller: loginBundle:Default:index }
+login_about:
+    path: about/
+    defaults: { _controller: loginBundle:Default:about }
+login_login:
+    path: login/
+    defaults: { _controller: loginBundle:Default:login }
+login_entidadereg:
+    path: register_entidade/
+    defaults: { _controller: loginBundle:Default:entidadereg }
+login_eventoreg:
+    path: register_evento/
+    defaults: { _controller: loginBundle:Default:eventoreg }
+login_evento:
+    path: event/
+    defaults: { _controller: loginBundle:Default:evento }
+login_eventolista:
+    path: evento_lista/
+    defaults: { _controller: loginBundle:Default:eventolista }
+login_doador_homepage:
+    path: doar/index/
+    defaults: { _controller: loginBundle:Doador:index }
+login_doador_about:
+    path: doar/about/
+    defaults: { _controller: loginBundle:Doador:about }
+login_doador_login:
+    path: doar/login/
+    defaults: { _controller: loginBundle:Doador:login }
+login_doador_confirmarpresenca:
+    path: doar/confirm/{iddoevento}
+    defaults: { _controller: loginBundle:Doador:confpres }
+login_doador_register:
+    path: doar/register/
+    defaults: { _controller: loginBundle:Doador:doadorreg }
