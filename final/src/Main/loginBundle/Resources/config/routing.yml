@@ -1,12 +1,15 @@
 login_homepage:
     path: index/
     defaults: { _controller: loginBundle:Default:index }
+login_profile:
+    path: profile/
+    defaults: { _controller: loginBundle:Default:profile }
 login_login_facebook:
     path: facebook/
     defaults: { _controller: loginBundle:Default:loginfacebook }
-login_testlogin:
-    path: test/
-    defaults: { _controller: loginBundle:Default:testlogin }
+login_facebookreg:
+    path: facebook/register/
+    defaults: { _controller: loginBundle:Default:facebookreg }    
 login_about:
     path: about/
     defaults: { _controller: loginBundle:Default:about }
@@ -16,6 +19,9 @@ login_login:
 login_logout:
     path: logout/
     defaults: { _controller: loginBundle:Default:logout }
+login_logout2:
+    path: clear/
+    defaults: { _controller: loginBundle:Default:clear }
 login_entidadereg:
     path: register_entidade/
     defaults: { _controller: loginBundle:Default:entidadereg }
@@ -23,7 +29,7 @@ login_eventoreg:
     path: register_evento/
     defaults: { _controller: loginBundle:Default:eventoreg }
 login_evento:
-    path: event/
+    path: event/{iddoevento}
     defaults: { _controller: loginBundle:Default:evento }
 login_eventolista:
     path: evento_lista/
@@ -43,3 +49,6 @@ login_doador_confirmarpresenca:
 login_doador_register:
     path: doar/register/
     defaults: { _controller: loginBundle:Doador:doadorreg }
+login_notfound:
+    path: errorNotFound/
+    defaults: { _controller: loginBundle:Default:notfound }

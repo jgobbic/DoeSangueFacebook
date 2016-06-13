@@ -1,0 +1,64 @@
+{%extends "loginBundle:Default:basicentidade.html.twig"%}
+{%block container %}
+    <div class="container">
+
+        <div class="row">
+            <div class="box">
+                <div class="col-lg-12">
+                    <hr>
+                    <h2 class="intro-text text-center">
+                        <strong>Visualizar Evento</strong>
+                    </h2>
+                    <hr>
+
+					<div class="col-lg-12 text-center">
+					</div>
+
+					<div class="col-lg-12">
+						<ul>
+                                                        <div class="col-lg-12 text-center">
+                                                            <p>
+                                                                <strong>Evento:</strong> {{nome}}
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-lg-12 text-center">
+                                                            {%if complemento is defined%}
+                                                            <p>
+                                                                <strong>Local:</strong> {{cidade}}, Bairro {{bairro}}, {{rua}}, {{numero}}, {{complemento}}
+                                                            </p>
+                                                            {%else%}
+                                                            <p>
+                                                                <strong>Local:</strong> {{cidade}}, Bairro {{bairro}}, {{rua}}, {{numero}}
+                                                            </p>
+                                                            {%endif%}
+                                                        </div>
+                                                        <div class="col-lg-12 text-center">
+															<p>
+                                                                <strong>Horário:</strong> Entre {{datainicio}} e {{datafim}}, das {{horainicio}} às {{horafim}}
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-lg-12 text-center">
+                                                            <hr>
+                                                            {%if descricao is defined%}
+                                                            <p>{{descricao}}</p>
+                                                            {%else%}
+                                                            <p>Sem descrição</p>
+                                                            {%endif%}
+                                                        </div>
+														<form role="form" method="POST" action="{{path('login_eventolista')}}" data-validate="parsley">
+                                                            <div class="col-lg-12 text-center">
+                                                                <div class="form-group col-lg-12">
+                                                                    <button type="submit" class="btn btn-default" name="volta" value="voltar">Voltar</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+						</ul>
+					</div>
+                <div class="clearfix"></div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{%endblock%}

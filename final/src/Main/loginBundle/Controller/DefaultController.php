@@ -5,10 +5,11 @@ namespace Main\loginBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Main\loginBundle\Entity\Entidade;
-use Main\loginBundle\Entity\Doador;
+//use Main\loginBundle\Entity\Doador;
 use Main\loginBundle\Entity\Evento;
 use Main\loginBundle\Modals\Login;
-use Main\loginBundle\Entity\Presenca;
+use Main\loginBundle\Modals\FBplach;
+//use Main\loginBundle\Entity\Presenca;
 use Main\loginBundle\Entity\Eventocred;
 
 class DefaultController extends Controller
@@ -19,12 +20,31 @@ class DefaultController extends Controller
         {
             $session = $this->getRequest()->getSession();
             $session->clear();
-            $username = $request->get('username');
-            $id = $request->get('id');
+            $username = $request->get('id');
             $login = new Login();
             $login->setUsername($username);
+            $mode = 1;
+            $login->setMode($mode);
             $session->set('login_entidade',$login);
             return $this->redirectToRoute('login_homepage');
+        }
+    }
+    
+    public function facebookregAction(Request $request)
+    {
+        if($request->getMethod()=='POST')
+        {
+            $session = $this->getRequest()->getSession();
+            $session->clear();
+            $username = $request->get('id');
+            $fbp = new FBplach();
+            $fbp->setId($username);
+            $session->set('fb_plach',$fbp);
+            return $this->redirectToRoute('login_entidadereg');
+        }
+        else
+        {
+            return $this->render('loginBundle:Default:facebookreg.html.twig');
         }
     }
     
@@ -40,11 +60,21 @@ class DefaultController extends Controller
         }
     }
     
-    public function testloginAction(Request $request)
+    public function profileAction()
     {
-       
-        return $this->render('loginBundle:Default:testelogin2.html.twig');
-        
+        if($this->isLogged())
+        {
+            $entidade=$this->getEntidade();
+            $nome=$entidade->getNome();
+            $cidade=$entidade->getCidade();
+            $descricao=$entidade->getDescricao();
+            $email=$entidade->getEmail();
+            return $this->render('loginBundle:Default:profileentidade.html.twig', array('nome'=>$nome,'cidade'=>$cidade,'email'=>$email,'descricao'=>$descricao));
+        }
+        else
+        {
+            return $this->redirectToRoute('login_homepage');
+        }
     }
     
     public function logoutAction(Request $request)
@@ -52,6 +82,13 @@ class DefaultController extends Controller
         $session=$request->getSession();
         $session->clear();
         return $this->redirectToRoute('login_homepage');        
+    }
+    
+    public function clearAction(Request $request)
+    {
+        $session=$request->getSession();
+        $session->clear();
+        return $this->redirectToRoute('login_entidadereg');        
     }
     
     public function bdhandling($eventocreds)
@@ -66,17 +103,31 @@ class DefaultController extends Controller
         return $arraytotal;
     }
     
-    public function eventolistaAction()
+    public function getEntidade()
     {
         $session=$this->getRequest()->getSession();
-        if($session->has('login_entidade')) // if isLogged praticamente
+        $login = $session->get('login_entidade');
+        $username = $login->getUsername();
+        $mode = $login->getMode();
+        $em = $this->getDoctrine()->getEntityManager();
+        $entidades = $em->getRepository('loginBundle:Entidade');
+        if($mode==0)
         {
-            $login = $session->get('login_entidade');
-            $email = $login->getUsername();
-            $password = $login->getPassword();
+            $entidade = $entidades->findOneBy(array('email'=>$username));
+        }
+        else
+        {
+            $entidade = $entidades->findOneBy(array('idfacebook'=>$username));
+        }
+        return $entidade;
+    }
+    
+    public function eventolistaAction()
+    {
+        if($this->isLogged()) // if isLogged praticamente
+        {
+            $entidade = $this->getEntidade();
             $em = $this->getDoctrine()->getEntityManager();
-            $entidades = $em->getRepository('loginBundle:Entidade');
-            $entidade = $entidades->findOneBy(array('email'=>$email,'password'=>$password));
             $id=$entidade->getID();
             $eventocredss = $em->getRepository('loginBundle:Eventocred');
             $eventocreds = $eventocredss->findBy(array('identidade'=>$id));
@@ -112,7 +163,8 @@ class DefaultController extends Controller
                 if($usr) // o usuario esta no BD
                 {
                     $login = new Login();
-                    $login->setPassword($password);
+                    $mode = 0;
+                    $login->setMode($mode);
                     $login->setUsername($email);
                     $session->set('login_entidade',$login);
                     return $this->redirectToRoute('login_homepage');
@@ -150,26 +202,35 @@ class DefaultController extends Controller
                 $cnpj=$request->get('cnpj');    
                 $email=$request->get('email');    
                 $descricao=$request->get('descricao'); 
+                $idfacebook=$request->get('idfacebook'); 
 
                 $entidade->setPassword($password);
                 $entidade->setCidade($cidade);
                 $entidade->setNome($username);
                 $entidade->setEmail($email);
-                $entidade->setIdfacebook("umidqualquer2");
-                $entidade->setLinkfacebook("umlinkqualquer2");
+                $entidade->setIdfacebook($idfacebook);
+                $entidade->setLinkfacebook("umlinkqualquer3");
                 $entidade->setCnpj($cnpj);
                 $entidade->setDescricao($descricao);
 
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($entidade);
                 $em->flush();
+                $request->getSession()->clear();
                 return $this->redirectToRoute('login_login');
             }
             else
             {
-                return $this->render('loginBundle:Default:formentidade.html.twig');
+                if($request->getSession()->has('fb_plach'))
+                {
+                    return $this->render('loginBundle:Default:formentidade.html.twig', array('fbid'=>$request->getSession()->get('fb_plach')->getId()));
+                }
+                else
+                {
+                    return $this->render('loginBundle:Default:formentidade.html.twig');
+                }
+                
             }
-            
         } 
     }
     
@@ -186,63 +247,63 @@ class DefaultController extends Controller
         }
     }
     
+    public function saveEvento(Request $request)
+    {
+        $evento = new Evento();
+        $cidade=$request->get('cidade');
+        $nome=$request->get('nome');
+        $rua=$request->get('rua');    
+        $bairro=$request->get('bairro');    
+        $numero=$request->get('numero');    
+        $complemento=$request->get('complemento');    
+        $descricao=$request->get('descricao');   
+        $linkfacebook=$request->get('linkfacebook');
+        $horainicio=$request->get('horainicio');    
+        $horafim=$request->get('horafim');    
+        $datainicio=$request->get('datainicio');   
+        $datafim=$request->get('datafim');
+        $datafim2 = new \DateTime($datafim);
+        $datainicio2 = new \DateTime($datainicio);
+        $horafim2 = new \DateTime($horafim);
+        $horainicio2 = new \DateTime($horainicio);
+
+        $evento->setNome($nome);
+        $evento->setCidade($cidade);
+        $evento->setRua($rua);
+        $evento->setBairro($bairro);
+        $evento->setNumero($numero);
+        $evento->setComplemento($complemento);
+        $evento->setDescricao($descricao);
+        $evento->setLinkfacebook($linkfacebook);
+        $evento->setDatainicio($datainicio2);
+        $evento->setHorafim($horafim2);
+        $evento->setHorainicio($horainicio2);
+        $evento->setDatafim($datafim2);
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->persist($evento);
+        $em->flush(); // salva no BD
+    }
+    
     public function eventoregAction(Request $request)
     {
         if($this->isLogged())
         {
             if($request->getMethod()=='POST')
             {
-                $evento = new Evento();
-                $cidade=$request->get('cidade');
-                $nome=$request->get('nome');
-                $rua=$request->get('rua');    
-                $bairro=$request->get('bairro');    
-                $numero=$request->get('numero');    
-                $complemento=$request->get('complemento');    
-                $descricao=$request->get('descricao');   
-                $linkfacebook=$request->get('linkfacebook');
-                $horainicio=$request->get('horainicio');    
-                $horafim=$request->get('horafim');    
-                $datainicio=$request->get('datainicio');   
-                $datafim=$request->get('datafim');
-                $datafim2 = new \DateTime($datafim);
-                $datainicio2 = new \DateTime($datainicio);
-                $horafim2 = new \DateTime($horafim);
-                $horainicio2 = new \DateTime($horainicio);
-
-                $evento->setNome($nome);
-                $evento->setCidade($cidade);
-                $evento->setRua($rua);
-                $evento->setBairro($bairro);
-                $evento->setNumero($numero);
-                $evento->setComplemento($complemento);
-                $evento->setDescricao($descricao);
-                $evento->setLinkfacebook($linkfacebook);
-                $evento->setDatainicio($datainicio2);
-                $evento->setHorafim($horafim2);
-                $evento->setHorainicio($horainicio2);
-                $evento->setDatafim($datafim2);
-
-                $em = $this->getDoctrine()->getEntityManager();
-                $em->persist($evento);
-                $em->flush(); // salva no BD
-
-                $session=$this->getRequest()->getSession();
-                $login = $session->get('login_entidade');
-                $email = $login->getUsername();
-                $em = $this->getDoctrine()->getEntityManager();
-                $repositoryEnt = $em->getRepository('loginBundle:Entidade'); 
-                $entidadeC = $repositoryEnt->findOneBy(array('email'=>$email)); 
+                $this->saveEvento($request);
+                $entidadeC = $this->getEntidade();
                 $identidade=$entidadeC->getId(); // pega no BD o ID da entidade
-
-                $repositoryEnt = $em->getRepository('loginBundle:Evento'); 
-                $eventoC = $repositoryEnt->findOneBy(array('linkfacebook'=>$linkfacebook)); 
+                
+                $em = $this->getDoctrine()->getEntityManager();
+                $repositoryEve = $em->getRepository('loginBundle:Evento'); 
+                $linkfacebook=$request->get('linkfacebook');
+                $eventoC = $repositoryEve->findOneBy(array('linkfacebook'=>$linkfacebook)); 
                 $idevento=$eventoC->getId(); // pega no BD o ID do evento
 
                 $eventocredentials = new Eventocred();
                 $eventocredentials->setIdentidade($identidade);
                 $eventocredentials->setIdevento($idevento);
-                $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($eventocredentials);
                 $em->flush(); // salva no BD a relação
 
@@ -257,11 +318,58 @@ class DefaultController extends Controller
         }
     }
     
-    public function eventoAction()
+    public function eventoAction($iddoevento)
     {
-        return $this->render('loginBundle:Default:index.html.twig'); // nao esta pronto
+        if($this->isLogged())
+        {
+            $entidade=$this->getEntidade();
+            $id=$entidade->getId();
+            $em = $this->getDoctrine()->getEntityManager();
+            $repositoryCred = $em->getRepository('loginBundle:Eventocred'); 
+            $eventocred = $repositoryCred->findOneBy(array('idevento'=>$iddoevento,'identidade'=>$id)); 
+            if($eventocred)
+            {
+                $repositoryEve = $em->getRepository('loginBundle:Evento'); 
+                $evento = $repositoryEve->findOneBy(array('id'=>$iddoevento)); 
+
+                return $this->render('loginBundle:Default:visualizarevento.html.twig', 
+                            array('id'=> $id,'datafim'=> $evento->getDatafim()->format('m-d-y'),
+                                'datainicio'=> $evento->getDatainicio()->format('m-d-y'),
+                                'horafim'=> $evento->getHorafim()->format('H:i'),
+                                'horainicio'=> $evento->getHorainicio()->format('H:i'),
+                                'numero'=> $evento->getNumero(),
+                                'bairro'=> $evento->getBairro(),
+                                'rua'=> $evento->getRua(),
+                                'cidade'=> $evento->getCidade(),
+                                'complemento'=> $evento->getComplemento(),
+                                'nome'=> $evento->getNome(),
+                                'descricao' => $evento->getDescricao()));
+            }
+            else
+            {
+                return $this->redirectToRoute('login_notfound');
+            }
+              
+        }
+        else
+        {
+            return $this->redirectToRoute('login_homepage');
+        }
+         
     }
-     
+    
+    public function notfoundAction()
+    {
+        if($this->isLogged())
+        {
+            return $this->render('loginBundle:Default:pagina404.html.twig', array('logged'=>'logged'));  
+        }
+        else
+        {
+            return $this->render('loginBundle:Default:pagina404.html.twig', array('logged'=>'notlogged'));  
+        }
+    }
+    
     public function aboutAction()
     {
         if($this->isLogged())
@@ -272,7 +380,6 @@ class DefaultController extends Controller
         {
             return $this->render('loginBundle:Default:about.html.twig', array('logged'=>'notlogged'));  
         }
-        
     }
 }
 
