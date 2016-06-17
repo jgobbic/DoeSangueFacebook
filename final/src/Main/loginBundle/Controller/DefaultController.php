@@ -48,6 +48,40 @@ class DefaultController extends Controller
         }
     }
     
+    public function eventoeditAction(Request $request)
+    {
+        if($request->getMethod()=='POST')
+        {
+            $em = $this->getDoctrine()->getEntityManager();
+            $id = $request->get('id');
+            $evento=$em->getRepository('loginBundle:Evento')->findOneBy(array('id'=>$id));
+            if($evento)
+            {
+                return $this->render('loginBundle:Default:formevento.html.twig', array('logged'=>'logged', 'evento'=>$evento));
+            }
+        }
+        return $this->redirectToRoute('login_eventolista');
+    }
+    
+    public function eventodestroyAction(Request $request)
+    {
+        if($request->getMethod()=='POST')
+        {
+            $em = $this->getDoctrine()->getEntityManager();
+            $id = $request->get('id');
+            $evento=$em->getRepository('loginBundle:Evento')->findOneBy(array('id'=>$id));
+            $em->remove($evento);
+            $em->flush();
+            $eventocreds=$em->getRepository('loginBundle:Eventocred')->findBy(array('idevento'=>$id));
+            foreach ($eventocreds as $row) {
+                $em->remove($row);
+                $em->flush();
+            }
+            return $this->redirectToRoute('login_eventolista');
+        }
+        return $this->redirectToRoute('login_eventolista');
+    }
+    
     public function indexAction(Request $request)
     {
         if($this->isLogged())
@@ -101,6 +135,14 @@ class DefaultController extends Controller
             $arraytotal[] = $eventos->findOneBy(array('id'=>$eventoid));
         }
         return $arraytotal;
+    }
+    
+    public function getUserusername()
+    {
+        $session=$this->getRequest()->getSession();
+        $login = $session->get('login_entidade');
+        $username = $login->getUsername();
+        return $username;
     }
     
     public function getEntidade()
@@ -249,7 +291,6 @@ class DefaultController extends Controller
     
     public function saveEvento(Request $request)
     {
-        $evento = new Evento();
         $cidade=$request->get('cidade');
         $nome=$request->get('nome');
         $rua=$request->get('rua');    
@@ -266,51 +307,77 @@ class DefaultController extends Controller
         $datainicio2 = new \DateTime($datainicio);
         $horafim2 = new \DateTime($horafim);
         $horainicio2 = new \DateTime($horainicio);
-
-        $evento->setNome($nome);
-        $evento->setCidade($cidade);
-        $evento->setRua($rua);
-        $evento->setBairro($bairro);
-        $evento->setNumero($numero);
-        $evento->setComplemento($complemento);
-        $evento->setDescricao($descricao);
-        $evento->setLinkfacebook($linkfacebook);
-        $evento->setDatainicio($datainicio2);
-        $evento->setHorafim($horafim2);
-        $evento->setHorainicio($horainicio2);
-        $evento->setDatafim($datafim2);
-
+        $edit = $request->get('edit');
         $em = $this->getDoctrine()->getEntityManager();
-        $em->persist($evento);
+        if($edit==-1)
+        {
+            $evento = new Evento();
+            $evento->setNome($nome);
+            $evento->setCidade($cidade);
+            $evento->setRua($rua);
+            $evento->setBairro($bairro);
+            $evento->setNumero($numero);
+            $evento->setComplemento($complemento);
+            $evento->setDescricao($descricao);
+            $evento->setLinkfacebook($linkfacebook);
+            $evento->setDatainicio($datainicio2);
+            $evento->setHorafim($horafim2);
+            $evento->setHorainicio($horainicio2);
+            $evento->setDatafim($datafim2);
+            $em->persist($evento);
+        }
+        else
+        {
+            $evento = $em->getRepository('loginBundle:Evento')->findOneBy(array('id'=>$edit));
+            $evento->setNome($nome);
+            $evento->setCidade($cidade);
+            $evento->setRua($rua);
+            $evento->setBairro($bairro);
+            $evento->setNumero($numero);
+            $evento->setComplemento($complemento);
+            $evento->setDescricao($descricao);
+            $evento->setLinkfacebook($linkfacebook);
+            $evento->setDatainicio($datainicio2);
+            $evento->setHorafim($horafim2);
+            $evento->setHorainicio($horainicio2);
+            $evento->setDatafim($datafim2);
+        } 
         $em->flush(); // salva no BD
     }
     
+    public function saveEventocred(Request $request)
+    {
+        $edit = $request->get('edit');
+        if($edit==-1)
+        {
+            $entidade = $this->getEntidade();
+            $identidade=$entidade->getId(); // pega no BD o ID da entidade
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $repositoryEve = $em->getRepository('loginBundle:Evento'); 
+            $linkfacebook=$request->get('linkfacebook');
+            $evento = $repositoryEve->findOneBy(array('linkfacebook'=>$linkfacebook)); 
+            $idevento=$evento->getId(); // pega no BD o ID do evento
+
+            $eventocredentials = new Eventocred();
+            $eventocredentials->setIdentidade($identidade);
+            $eventocredentials->setIdevento($idevento);
+            $em->persist($eventocredentials);
+            $em->flush(); // salva no BD a relação
+        }
+    }
     public function eventoregAction(Request $request)
     {
         if($this->isLogged())
         {
             if($request->getMethod()=='POST')
             {
-                $this->saveEvento($request);
-                $entidadeC = $this->getEntidade();
-                $identidade=$entidadeC->getId(); // pega no BD o ID da entidade
-                
-                $em = $this->getDoctrine()->getEntityManager();
-                $repositoryEve = $em->getRepository('loginBundle:Evento'); 
-                $linkfacebook=$request->get('linkfacebook');
-                $eventoC = $repositoryEve->findOneBy(array('linkfacebook'=>$linkfacebook)); 
-                $idevento=$eventoC->getId(); // pega no BD o ID do evento
-
-                $eventocredentials = new Eventocred();
-                $eventocredentials->setIdentidade($identidade);
-                $eventocredentials->setIdevento($idevento);
-                $em->persist($eventocredentials);
-                $em->flush(); // salva no BD a relação
-
-                return $this->redirectToRoute('login_homepage');
+                $this->saveEvento($request); 
+                $this->saveEventocred($request); 
+                return $this->redirectToRoute('login_eventolista');
                 
             }
-            return $this->render('loginBundle:Default:formevento.html.twig', array('logged'=>'logged'));
+            return $this->render('loginBundle:Default:formevento.html.twig', array('logged'=>'logged','evento'=>null));
         }
         else
         {
