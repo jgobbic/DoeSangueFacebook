@@ -2,13 +2,57 @@
     ? 'loginBundle:Default:basicentidade.html.twig' 
     : 'loginBundle:Default:basic.html.twig' %}
 {%block container %}
+    
+    <script>
+    function post(path, params, method) {
+      method = method || "post"; // Set method to post by default if not specified.
+
+      // The rest of this code assumes you are not using a library.
+      // It can be made less wordy if you use one.
+      var form = document.createElement("form");
+      form.setAttribute("method", method);
+      form.setAttribute("action", path);
+
+      for(var key in params) {
+          if(params.hasOwnProperty(key)) {
+              var hiddenField = document.createElement("input");
+              hiddenField.setAttribute("type", "hidden");
+              hiddenField.setAttribute("name", key);
+              hiddenField.setAttribute("value", params[key]);
+
+              form.appendChild(hiddenField);
+           }
+      }
+
+      document.body.appendChild(form);
+      form.submit();
+    }
+    function confirmRemove(id) {
+        if (confirm("Realmente deseja remover este evento?") === true) {
+            post( "{{path('login_evento_destroy')}}", { id: id } );
+        } else {
+            x = 0;
+        }
+    }
+    function edit(id) {
+        post( "{{path('login_evento_edit')}}", { id: id } );
+    }
+    </script>
     <div class="container">
 
         <div class="row">
             <div class="box">
-                <table class="table table-hover table-striped table-bordered text-center">
+                <table class="table table-hover table-striped text-center">
+                    <col span="1" style="width: 6%;">
+                    <col span="1" style="width: 30%;">
+                    <col span="1" style="width: 20%;">
+                    <col span="1" style="width: 23%;">
+                    <col span="1" style="width: 7%;">
+                    <col span="1" style="width: 7%;">
+                    <col span="1" style="width: 7%;">
                     <thead>
                       <tr>
+                          <th class="text-center">###</th>
                         <th class="text-center">Nome do Evento</th>
                         <th class="text-center">Data Inicial</th>
                         <th class="text-center">Data Final</th>
@@ -18,22 +62,26 @@
                       </tr>
                     </thead>
                     <tbody>
+                        {%set i = 1%}
                         {%for evento in eventos%}
                             <tr>
+                                <td>#{{i}}</td>
                                 <td>{{evento.getNome()}}</td>
-                                <td>{{evento.getDatainicio().format('m-d')}}</td>
-                                <td>{{evento.getDatafim().format('m-d')}}</td>
+                                <td>{{evento.getDatainicio().format('m-d-y')}}</td>
+                                <td>{{evento.getDatafim().format('m-d-y')}}</td>
                                 <td>
                                     <form action="{{path('login_evento',{'iddoevento':evento.getId()})}}"> <button type="submit" class="btn btn-default">Página</button>
                                     </form>
                                 </td>
                                 <td>
-                                    <button type="submit" class="btn btn-default">Editar</button>
+                                    <button onclick="edit($(this).val());" class="btn btn-default" value="{{evento.getId()}}">Editar</button>
                                 </td>
                                 <td>
-                                    <button type="submit" class="btn btn-default">Remover</button>
+                                    <button onclick="confirmRemove($(this).val());" class="btn btn-default" value="{{evento.getId()}}">Remover</button>
+                                    
                                 </td>
                              </tr>
+                             {%set i = i+1%}
                         {%endfor%}
                     </tbody>
                   </table>
