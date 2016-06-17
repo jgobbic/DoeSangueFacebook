@@ -7,6 +7,9 @@ login_profile:
 login_login_facebook:
     path: facebook/
     defaults: { _controller: loginBundle:Default:loginfacebook }
+login_evento_destroy:
+    path: evento/remove/
+    defaults: { _controller: loginBundle:Default:eventodestroy }
 login_facebookreg:
     path: facebook/register/
     defaults: { _controller: loginBundle:Default:facebookreg }    
@@ -28,6 +31,9 @@ login_entidadereg:
 login_eventoreg:
     path: register_evento/
     defaults: { _controller: loginBundle:Default:eventoreg }
+login_evento_edit:
+    path: evento/edit
+    defaults: { _controller: loginBundle:Default:eventoedit }
 login_evento:
     path: event/{iddoevento}
     defaults: { _controller: loginBundle:Default:evento }
