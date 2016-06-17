@@ -44,7 +44,7 @@ class DefaultController extends Controller
         }
         else
         {
-            return $this->render('loginBundle:Default:facebookreg.html.twig');
+            return $this->redirectToRoute('login_homepage');
         }
     }
     

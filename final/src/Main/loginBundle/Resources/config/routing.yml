@@ -40,6 +40,8 @@ login_evento:
 login_eventolista:
     path: evento_lista/
     defaults: { _controller: loginBundle:Default:eventolista }
+    
+    
 login_doador_homepage:
     path: doar/index/
     defaults: { _controller: loginBundle:Doador:index }
@@ -52,9 +54,36 @@ login_doador_login:
 login_doador_confirmarpresenca:
     path: doar/confirm/{iddoevento}
     defaults: { _controller: loginBundle:Doador:confpres }
+login_doador_facebookreg:
+    path: doar/facebook/register/
+    defaults: { _controller: loginBundle:Doador:facebookreg }  
+login_doador_login_facebook:
+    path: doar/facebook/
+    defaults: { _controller: loginBundle:Doador:loginfacebook }
 login_doador_register:
     path: doar/register/
     defaults: { _controller: loginBundle:Doador:doadorreg }
+login_doador_logout:
+    path: doar/clear/
+    defaults: { _controller: loginBundle:Doador:logout }
+login_doador_logout2:
+    path: doar/logout/
+    defaults: { _controller: loginBundle:Doador:clear }
 login_notfound:
     path: errorNotFound/
     defaults: { _controller: loginBundle:Default:notfound }
+login_doador_notfound:
+    path: doar/errorNotFound/
+    defaults: { _controller: loginBundle:Doador:notfound }
+login_doador_errorlogin:
+    path: doar/login/f
+    defaults: { _controller: loginBundle:Doador:errorlogin }
+login_doador_thanks:
+    path: doar/thanks/
+    defaults: { _controller: loginBundle:Doador:thanks }
+login_doador_profile:
+    path: doar/profile/
+    defaults: { _controller: loginBundle:Doador:profile }
+login_doador_welcome:
+    path: doar/welcome/
+    defaults: { _controller: loginBundle:Doador:welcome }

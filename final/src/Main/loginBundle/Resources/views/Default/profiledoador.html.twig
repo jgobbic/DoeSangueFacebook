@@ -1,4 +1,4 @@
-{%extends "loginBundle:Default:basicdoador.html.twig"%}
+{%extends "loginBundle:Default:basicdoadorlogado.html.twig"%}
 {%block container %}
     <div class="container">
 
@@ -10,38 +10,56 @@
                         <strong>Seu Perfil</strong>
                     </h2>
                     <hr>
-
-					<div class="col-lg-12 text-center">
-					</div>
-
-					<div class="col-lg-12">
-						<ul>
-                                                        <div class="col-lg-12 text-center">
-                                                            <p>
-                                                                <strong>Doador:</strong> {{nome}}
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-lg-12 text-center">
-															<p>
-                                                                <strong>Tipo de sangue:</strong> {{tiposangue}}{{rhsangue}}
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-lg-12 text-center">
-															<p>
-                                                                <strong>Logradouro:</strong> {{cidade}}
-                                                            </p>
-                                                        </div>
-														<form role="form" method="POST" action="{{path('login_doador_homepage')}}" data-validate="parsley">
-                                                            <div class="col-lg-12 text-center">
-                                                                <div class="form-group col-lg-12">
-                                                                    <button type="submit" class="btn btn-default" name="volta" value="voltar">Voltar</button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-						</ul>
-					</div>
-                <div class="clearfix"></div>
-
+                    <div class="col-xs-12" style="height:30px;"></div>
+                    <div class="col-lg-2 text-center"></div>
+                    <div class="col-lg-8">
+                        <table class="table table-bordered" border="0" celpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="col-lg-12 text-left">
+                                            <p>
+                                                <strong>Doador:</strong>
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-12 text-left">
+                                            <p>
+                                                {{nome}}
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-12 text-left">
+                                            <p>
+                                                <strong>Tipo de sangue:</strong>
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-12 text-left">
+                                            <p>
+                                                {{tiposangue}}{{rhsangue}}
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-12 text-left">
+                                            <p>
+                                                <strong>Logradouro:</strong>
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-12 text-left">
+                                            <p>
+                                                {{cidade}}
+                                            </p>
+                                        </div>
+                                        <form role="form" method="POST" action="{{path('login_doador_homepage')}}" data-validate="parsley">
+                                            <div class="col-lg-12 text-center">
+                                                <div class="form-group col-lg-12">
+                                                    <button type="submit" class="btn btn-default" name="volta" value="voltar">Voltar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </div>

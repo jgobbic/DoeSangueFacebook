@@ -10,52 +10,85 @@
                         <strong>Visualizar Evento</strong>
                     </h2>
                     <hr>
-
-					<div class="col-lg-12 text-center">
-					</div>
-
-					<div class="col-lg-12">
-						<ul>
-                                                        <div class="col-lg-12 text-center">
-                                                            <p>
-                                                                <strong>Evento:</strong> {{nome}}
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-lg-12 text-center">
-                                                            {%if complemento is defined%}
-                                                            <p>
-                                                                <strong>Local:</strong> {{cidade}}, Bairro {{bairro}}, {{rua}}, {{numero}}, {{complemento}}
-                                                            </p>
-                                                            {%else%}
-                                                            <p>
-                                                                <strong>Local:</strong> {{cidade}}, Bairro {{bairro}}, {{rua}}, {{numero}}
-                                                            </p>
-                                                            {%endif%}
-                                                        </div>
-                                                        <div class="col-lg-12 text-center">
-															<p>
-                                                                <strong>Horário:</strong> Entre {{datainicio}} e {{datafim}}, das {{horainicio}} às {{horafim}}
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-lg-12 text-center">
-                                                            <hr>
-                                                            {%if descricao is defined%}
-                                                            <p>{{descricao}}</p>
-                                                            {%else%}
-                                                            <p>Sem descrição</p>
-                                                            {%endif%}
-                                                        </div>
-														<form role="form" method="POST" action="{{path('login_eventolista')}}" data-validate="parsley">
-                                                            <div class="col-lg-12 text-center">
-                                                                <div class="form-group col-lg-12">
-                                                                    <button type="submit" class="btn btn-default" name="volta" value="voltar">Voltar</button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-						</ul>
-					</div>
-                <div class="clearfix"></div>
-
+                    <div class="col-xs-12" style="height:30px;"></div>
+                    <div class="col-lg-2 text-center"></div>
+                    <div class="col-lg-8">
+                        <table class="table table-bordered" border="0" celpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="col-lg-12 text-center">
+                                            <div class="col-lg-12 text-center">
+                                                <p>
+                                                    <strong>Evento:</strong> {{nome}}
+                                                </p>
+                                            </div>
+                                            <div class="col-lg-12 text-left">
+                                                <p><strong>Rua:</strong></p>
+                                            </div>
+                                            <div class="col-lg-12 text-left">
+                                                {%if complemento is defined%}
+                                                <p>
+                                                    {{rua}}, {{numero}}, {{complemento}}
+                                                </p>
+                                                {%else%}
+                                                <p>
+                                                    {{rua}}, {{numero}}
+                                                </p>
+                                                {%endif%}
+                                            </div>
+                                            <div class="col-lg-12 text-left">
+                                                <p><strong>Bairro:</strong></p>
+                                            </div>
+                                            <div class="col-lg-12 text-left">
+                                                <p>{{bairro}}</p>
+                                            </div>
+                                            <div class="col-lg-12 text-left">
+                                                <p>
+                                                    <strong>Data:</strong>
+                                                </p>
+                                            </div>
+                                            <div class="col-lg-12 text-left">
+                                                <p>
+                                                    Entre {{datainicio}} e {{datafim}}
+                                                </p>
+                                            </div>
+                                            <div class="col-lg-12 text-left">
+                                                <p>
+                                                    <strong>Horário:</strong>
+                                                </p>
+                                            </div>
+                                            <div class="col-lg-12 text-left">
+                                                <p>
+                                                    das {{horainicio}} às {{horafim}}
+                                                </p>
+                                            </div>
+                                            <div class="col-xs-12" style="height:25px;"></div>
+                                            <div class="col-lg-12 text-justify">
+                                                <p><strong>Descricao:</strong></p>
+                                            </div>
+                                            <div class="col-lg-12 text-justify">
+                                                {%if descricao is defined%}
+                                                <p>{{descricao}}</p>
+                                                {%else%}
+                                                <p>Sem descrição</p>
+                                                {%endif%}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="col-xs-12" style="height:50px;"></div>
+                        <form role="form" method="POST" action="{{path('login_eventolista')}}" data-validate="parsley">
+                            <div class="col-lg-12 text-center">
+                                <div class="form-group col-lg-12">
+                                    <button type="submit" class="btn btn-default" name="volta" value="voltar">Voltar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </div>
