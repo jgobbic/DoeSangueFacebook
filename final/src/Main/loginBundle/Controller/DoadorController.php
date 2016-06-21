@@ -64,7 +64,7 @@ class DoadorController extends Controller
                 $session->remove('login');
             }
             $username = $request->get('id');
-            if($this->assertLogin($username, 1))
+            if($this->assertLogin($username, 1, null))
             {
                 $login = new Login();
                 $login->setUsername($username);
@@ -89,32 +89,38 @@ class DoadorController extends Controller
     
     public function loginAction(Request $request)
     {
-        $session=$this->getRequest()->getSession();
-        if($request->getMethod()=='POST')
+        if(!($this->isLogged())) // se nao esta logado
         {
-            if($session->has('login'))
+            $session=$this->getRequest()->getSession();
+            if($request->getMethod()=='POST')
             {
-                $session->remove('login');
-            }
-            $user = $this->assertLogin($request->get('username'),0,md5($request->get('password')));
-            if($user)
-            {
-                $login = new Login();
-                $login->setUsername($user->getUsername());
-                $login->setPassword(md5($user->getPassword()));
-                $mode = 0;
-                $login->setMode($mode);
-                $session->set('login',$login);
-                return $this->redirectToRoute('login_doador_homepage');
+                if($session->has('login'))
+                {
+                    $session->remove('login');
+                }
+                $user = $this->assertLogin($request->get('username'),0,md5($request->get('password')));
+                if($user)
+                {
+                    $login = new Login();
+                    $login->setUsername($user->getUsername());
+                    $mode = 0;
+                    $login->setMode($mode);
+                    $session->set('login',$login);
+                    return $this->redirectToRoute('login_doador_homepage');
+                }
+                else
+                {
+                    return $this->render('loginBundle:Default:doadorloginuser.html.twig', array('name' => 'Login Error'));
+                }
             }
             else
-            {
-                return $this->render('loginBundle:Default:doadorloginuser.html.twig', array('name' => 'Login Error'));
+            { 
+                return $this->render('loginBundle:Default:doadorloginuser.html.twig');
             }
         }
         else
-        { 
-            return $this->render('loginBundle:Default:doadorloginuser.html.twig');
+        {
+            return $this->redirectToRoute('login_doador_homepage');
         }
     }
     

@@ -21,13 +21,25 @@ class DefaultController extends Controller
             $session = $this->getRequest()->getSession();
             $session->clear();
             $username = $request->get('id');
-            $login = new Login();
-            $login->setUsername($username);
-            $mode = 1;
-            $login->setMode($mode);
-            $session->set('login_entidade',$login);
-            return $this->redirectToRoute('login_homepage');
+            if($this->assertLogin($username, 1, null))
+            {
+                $login = new Login();
+                $login->setUsername($username);
+                $mode = 1;
+                $login->setMode($mode);
+                $session->set('login_entidade',$login);
+                return $this->redirectToRoute('login_homepage');
+            }
+            else
+            {
+                return $this->redirectToRoute('login_errorlogin');
+            }
         }
+    }
+    
+    public function errorloginAction()
+    {
+        return $this->render('loginBundle:Default:loginuser.html.twig', array('name' => 'Login Error'));
     }
     
     public function facebookregAction(Request $request)
@@ -91,6 +103,18 @@ class DefaultController extends Controller
         else
         {
             return $this->render('loginBundle:Default:index.html.twig', array('logged' => 'notlogged'));
+        }
+    }
+    
+    public function assertLogin($id, $mode, $password)
+    {
+        if($mode==0)
+        {
+            return $this->getDoctrine()->getEntityManager()->getRepository('loginBundle:Entidade')->findOnebY(array('email'=>$id,'password'=>$password));
+        }
+        else
+        {
+            return $this->getDoctrine()->getEntityManager()->getRepository('loginBundle:Entidade')->findOnebY(array('idfacebook'=>$id));
         }
     }
     
@@ -199,9 +223,7 @@ class DefaultController extends Controller
                 $session->clear();
                 $email=$request->get('email');
                 $password=md5($request->get('password'));
-                $em = $this->getDoctrine()->getEntityManager();
-                $repository = $em->getRepository('loginBundle:Entidade'); 
-                $usr = $repository->findOneBy(array('email'=>$email,'password'=>$password));
+                $usr = $this->assertLogin($email, 0, $password);
                 if($usr) // o usuario esta no BD
                 {
                     $login = new Login();
