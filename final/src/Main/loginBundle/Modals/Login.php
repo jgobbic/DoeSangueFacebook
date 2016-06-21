@@ -8,24 +8,33 @@ namespace Main\loginBundle\Modals;
 
 class Login
 {
-    private $password;
+    private $mode;
     private $username;
-    function getPassword() {
-        return $this->password;
+    private $password;
+    
+    function getMode() {
+        return $this->mode;
     }
 
     function getUsername() {
         return $this->username;
     }
 
-    function setPassword($password) {
-        $this->password = $password;
+    function setMode($mode) {
+        $this->mode = $mode;
     }
 
     function setUsername($username) {
         $this->username = $username;
     }
 
+    function setPassword($password) {
+        $this->password = $password;
+    }
+
+    function getPassword() {
+        return $this->password;
+    }
 
      
 }

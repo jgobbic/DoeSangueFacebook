@@ -96,15 +96,16 @@ class DoadorController extends Controller
             {
                 $session->remove('login');
             }
-            $user = $this->assertLogin($request->get('id'),0);
+            $user = $this->assertLogin($request->get('username'),0,md5($request->get('password')));
             if($user)
             {
                 $login = new Login();
                 $login->setUsername($user->getUsername());
+                $login->setPassword(md5($user->getPassword()));
                 $mode = 0;
                 $login->setMode($mode);
                 $session->set('login',$login);
-                return $this->redirectToRoute('login_doador_homepage'); // red
+                return $this->redirectToRoute('login_doador_homepage');
             }
             else
             {
@@ -232,11 +233,11 @@ class DoadorController extends Controller
         $em->flush();
     }
     
-    public function assertLogin($id, $mode)
+    public function assertLogin($id, $mode, $password)
     {
         if($mode==0)
         {
-            return $this->getDoctrine()->getEntityManager()->getRepository('loginBundle:Doador')->findOnebY(array('id'=>$id));
+            return $this->getDoctrine()->getEntityManager()->getRepository('loginBundle:Doador')->findOnebY(array('username'=>$id,'password'=>$password));
         }
         else
         {
@@ -364,7 +365,7 @@ class DoadorController extends Controller
             $login = $this->getRequest()->getSession()->get('login');
             $id=$login->getUsername();
             $mode=$login->getMode();
-            $doador=$this->assertLogin($id,$mode);
+            $doador=$this->assertLogin($id,$mode,null);
             $nome=$doador->getNome();
             $cidade=$doador->getCidade();
             $rh=$doador->getRhsangue();
