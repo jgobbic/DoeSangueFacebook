@@ -227,7 +227,7 @@
                                     {%endif%}
                                     <div class="form-group col-lg-12">
                                         <label>Nome*</label>
-                                        <input type="text" id="username" class="form-control" name="username" data-trigger="change" data-required="true">
+                                        <input type="text" id="username" class="form-control" name="username" data-trigger="change" data-required="true" minlength="2">
                                     </div>
                                     {% if error2 is defined%}
                                         <div class="col-xs-12">
@@ -253,15 +253,19 @@
                                     {%endif%}
                                     <div class="form-group col-lg-12">
                                         <label>Senha*</label>
-                                        <input type="password" class="form-control" id="password" name="password" data-trigger="change" data-required="true">
+                                        <input type="password" class="form-control" id="password" name="password" data-trigger="change" data-required="true"  minlength="6">
                                     </div>
                                     <div class="form-group col-lg-12">
                                         <label>Repita sua Senha*</label>
                                         <input type="password" class="form-control" name="repassword" data-trigger="change" data-required="true" data-equalto="#password">
                                     </div>
-                                    <div class="form-group col-lg-12">
+                                    <div class="form-group col-lg-6">
                                         <label>Cidade*</label>
                                         <input type="text" id="cidade" class="form-control" name="cidade" data-trigger="change" data-required="true">
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label>Estado*</label>
+                                        <input type="text" id="estado" class="form-control" name="estado" data-trigger="change" data-required="true">
                                     </div>
                                     <div class="form-group col-lg-12">
                                         <label>CNPJ</label>
@@ -269,7 +273,7 @@
                                     </div>
                                     <div class="form-group col-lg-12">
                                         <label>Descrição</label>
-                                        <textarea type="text" cols="40" rows="12" id="descricao" class="form-control" name="descricao" data-trigger="change" ></textarea>
+                                        <textarea type="text" cols="40" rows="12" id="descricao" class="form-control" name="descricao" data-trigger="change"  maxlength="500"></textarea>
                                     </div>
                                     <div class="form-group col-lg-12">
                                         <button type="submit" class="btn btn-default btn-block">Registrar</button>

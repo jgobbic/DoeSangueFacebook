@@ -37,6 +37,11 @@ class Doador
     /**
      * @var string
      */
+    private $estado;
+
+    /**
+     * @var string
+     */
     private $cidade;
 
     /**
@@ -48,11 +53,6 @@ class Doador
      * @var string
      */
     private $idfacebook;
-
-    /**
-     * @var string
-     */
-    private $linkfacebook;
 
     /**
      * @var integer
@@ -176,6 +176,29 @@ class Doador
     }
 
     /**
+     * Set estado
+     *
+     * @param string $estado
+     * @return Doador
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return string 
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    /**
      * Set cidade
      *
      * @param string $cidade
@@ -242,29 +265,6 @@ class Doador
     public function getIdfacebook()
     {
         return $this->idfacebook;
-    }
-
-    /**
-     * Set linkfacebook
-     *
-     * @param string $linkfacebook
-     * @return Doador
-     */
-    public function setLinkfacebook($linkfacebook)
-    {
-        $this->linkfacebook = $linkfacebook;
-
-        return $this;
-    }
-
-    /**
-     * Get linkfacebook
-     *
-     * @return string 
-     */
-    public function getLinkfacebook()
-    {
-        return $this->linkfacebook;
     }
 
     /**

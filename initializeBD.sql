@@ -63,6 +63,7 @@ CREATE
     ID     				INTEGER		  NOT NULL AUTO_INCREMENT,  
     NOME			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
     CIDADE      		VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
+    ESTADO      		VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
     RUA				VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
     BAIRRO			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
     NUMERO				INTEGER		  NOT NULL ,

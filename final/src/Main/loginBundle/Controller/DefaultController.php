@@ -272,6 +272,7 @@ class DefaultController extends Controller
         $email=$request->get('email');    
         $descricao=$request->get('descricao'); 
         $idfacebook=$request->get('idfacebook'); 
+        $estado=$request->get('estado');
         $array = array();
         $array['fbid']=$request->getSession()->get('fb_plach')->getId();
         $error=0;
@@ -297,7 +298,7 @@ class DefaultController extends Controller
             $entidade->setNome($username);
             $entidade->setEmail($email);
             $entidade->setIdfacebook($idfacebook);
-            $entidade->setLinkfacebook("umlinkqualquer");
+            $entidade->setEstado($estado);
             $entidade->setCnpj($cnpj);
             $entidade->setDescricao($descricao);
 
@@ -359,7 +360,8 @@ class DefaultController extends Controller
         $nome=$request->get('nome');
         $rua=$request->get('rua');    
         $bairro=$request->get('bairro');    
-        $numero=$request->get('numero');    
+        $numero=$request->get('numero');  
+        $estado=$request->get('estado');  
         $complemento=$request->get('complemento');    
         $descricao=$request->get('descricao');   
         $linkfacebook=$request->get('linkfacebook');
@@ -390,6 +392,7 @@ class DefaultController extends Controller
                 $evento->setHorafim($horafim2);
                 $evento->setHorainicio($horainicio2);
                 $evento->setDatafim($datafim2);
+                $evento->setEstado($estado);
                 $em->persist($evento);     
             }
             else

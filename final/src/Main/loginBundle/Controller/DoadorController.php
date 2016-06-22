@@ -138,6 +138,7 @@ class DoadorController extends Controller
         $peso=$request->get('peso'); 
         $sangue=$request->get('sangue');
         $rh=$request->get('rh');
+        $estado=$request->get('estado');
         $idfacebook=$request->get('idfacebook');
         $error = 0;
         $array = array();
@@ -169,7 +170,7 @@ class DoadorController extends Controller
             $doador->setPassword($password);
             $doador->setTiposangue($sangue);
             $doador->setRhsangue($rh);
-            $doador->setLinkfacebook("umidqualuqer");
+            $doador->setEstado($estado);
             $doador->setIdfacebook($idfacebook);
 
             $em = $this->getDoctrine()->getEntityManager();
