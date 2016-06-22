@@ -24,6 +24,7 @@ CREATE
     RHSANGUE			CHAR (1) COLLATE utf8_unicode_ci NOT NULL ,
     PESO       			BOOLEAN NOT NULL ,
     CIDADE      		VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
+    ESTADO			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
     NOME				VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
     IDFACEBOOK			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
     PRIMARY KEY ( ID )
@@ -41,6 +42,7 @@ CREATE
     ID     				INTEGER		  NOT NULL AUTO_INCREMENT,  
     PASSWORD			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,  
     EMAIL			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
+    ESTADO      		VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
     CIDADE      		VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
     NOME				VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
     IDFACEBOOK			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
