@@ -30,7 +30,7 @@
         FB.api('/me', function(response) {
           uname = response.name;
           console.log('Successful login for: ' + uid + uname);
-          post( "{{path('login_doador_facebookreg')}}", { id: uid } );
+          post( "{{path('login_doador_facebookreg')}}", { id: uid , name: uname} );
         });
 
 
@@ -155,8 +155,9 @@
         FB.api('/me', function(response) {
           uname = response.name;
           console.log('Successful login for: ' + uid + uname);
-          post( "{{path('login_doador_facebookreg')}}", { id: uid } );
+          post( "{{path('login_doador_facebookreg')}}", { id: uid , name: uname} );
         });
+
 
 
 
@@ -202,20 +203,28 @@
                                      <label>Facebook ID*</label>
                                      <input readonly type="text" class="form-control" name="idfacebook" data-required="true" value="{{fbid}}">
                                  </div>
-                        {%else%}
-
-                        <form role="form" method="POST" action="{{path('login_doador_register')}}" data-validate="parsley">
-                            <div class="row">
-                                <div class="form-group col-lg-12">
-                                    <label>Facebook ID*: </label>
-                                    <fb:login-button scope="public_profile,email" data-size="small" onlogin="clickLogin();"></fb:login-button>
-                                    <input readonly type="text" class="form-control" name="idfacebook" data-required="true">
-                                </div>
-                        {%endif%}
-                                <div class="form-group col-lg-12">
+                                {% if error1 is defined%}
+                                    <div class="col-xs-12">
+                                        <div class="col-xs-2"></div>
+                                        <div class="col-xs-8 alert alert-danger fade in">
+                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                            <strong>Facebook já cadastrado!</strong>
+                                        </div>
+                                    </div>
+                                {%endif%}
+                                    <div class="form-group col-lg-12">
                                     <label>Usuário*</label>
                                     <input type="text" name="username" id="username" class="form-control" data-trigger="change" data-required="true">
                                 </div>
+                                {% if error2 is defined%}
+                                    <div class="col-xs-12">
+                                        <div class="col-xs-2"></div>
+                                        <div class="col-xs-8 alert alert-danger fade in">
+                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                            <strong>Username já cadastrado!</strong>
+                                        </div>
+                                    </div>
+                                {%endif%}
                                 <div class="form-group col-lg-12">
                                     <label>Senha*</label>
                                     <input type="password" name="password" id="password" class="form-control" data-trigger="change" data-required="true">
@@ -228,12 +237,18 @@
                                     <label>Nome*</label>
                                     <input type="text" name="nome" class="form-control" data-trigger="change" data-required="true">
                                 </div>
-                                <div class="form-group col-lg-12">
+                                <div class="form-group col-lg-6">
                                     <label>Cidade*</label>
                                     <input type="text" name="cidade" class="form-control" data-trigger="change" data-required="true">
                                 </div>
-                                <div class="form-group col-sm-3">
+                                <div class="form-group col-lg-6">
+                                    <label>Estado*</label>
+                                    <input type="text" name="estado" class="form-control" data-trigger="change" data-required="true">
+                                </div>
+                                <div class="form-group col-sm-6">
                                     <label>Você tem mais do que 50 quilos?*</label>
+                                </div>
+                                <div class="form-group col-sm-3">
                                     <input type="checkbox" name="peso" class="form-control" data-trigger="change">
                                 </div>
                                 <div class="clearfix"></div>
@@ -258,6 +273,77 @@
                                 </div>
                             </div>
                         </form>
+                        {%else%}
+                        
+                        <form role="form" method="POST" action="{{path('login_doador_register')}}" data-validate="parsley">
+                            <div class="row">
+                                <div class="form-group col-lg-12">
+                                    <label>Facebook ID*: </label>
+                                    <fb:login-button scope="public_profile,email" data-size="small" onlogin="clickLogin();"></fb:login-button>
+                                    <input readonly type="text" class="form-control" name="idfacebook" data-required="true">
+                                </div>
+                                    <div class="form-group col-lg-12">
+                                    <label>Usuário*</label>
+                                    <input type="text" name="username" id="username" class="form-control" data-trigger="change" data-required="true">
+                                </div>
+                                {% if error2 is defined%}
+                                    <div class="col-xs-12">
+                                        <div class="col-xs-2"></div>
+                                        <div class="col-xs-8 alert alert-danger fade in">
+                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                            <strong>Username já cadastrado!</strong>
+                                        </div>
+                                    </div>
+                                {%endif%}
+                                <div class="form-group col-lg-12">
+                                    <label>Senha*</label>
+                                    <input type="password" name="password" id="password" class="form-control" data-trigger="change" data-required="true">
+                                </div>
+                                <div class="form-group col-lg-12">
+                                    <label>Repita sua Senha*</label>
+                                    <input type="password" name="repassword" class="form-control" data-trigger="change" data-required="true" data-equalto="#password">
+                                </div>
+                                <div class="form-group col-lg-12">
+                                    <label>Nome*</label>
+                                    <input type="text" name="nome" class="form-control" data-trigger="change" data-required="true">
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label>Cidade*</label>
+                                    <input type="text" name="cidade" class="form-control" data-trigger="change" data-required="true">
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label>Estado*</label>
+                                    <input type="text" name="estado" class="form-control" data-trigger="change" data-required="true">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label>Você tem mais do que 50 quilos?*</label>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <input type="checkbox" name="peso" class="form-control" data-trigger="change">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group col-lg-6">
+                                    <label for="sangue">Insira seu tipo sanguíneo:*</label>
+                                                                              <select class="form-control" id="sangue" name="sangue" data-trigger="change" data-required="true">
+                                                                                    <option>A</option>
+                                                                                    <option>B</option>
+                                                                                    <option>AB</option>
+                                                                                    <option>O</option>
+                                                                              </select>
+                                </div>
+                                                            <div class="form-group col-lg-6">
+                                    <label for="rh">Insira seu RH:*</label>
+                                                                              <select class="form-control" id="rh" name="rh" data-trigger="change" data-required="true">
+                                                                                    <option>+</option>
+                                                                                    <option>-</option>
+                                                                              </select>
+                                </div>
+                                <div class="form-group col-lg-12">
+                                    <button type="submit" class="btn btn-default btn-block">Registrar</button>
+                                </div>
+                            </div>
+                        </form>
+                        {%endif%}
                         <form action="{{path('login_doador_logout2')}}">
                             <input type="submit" class="btn btn-default btn-block" value="Clear">
                         </form>

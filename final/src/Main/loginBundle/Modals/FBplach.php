@@ -8,8 +8,35 @@
 class FBplach
 {
     private $id;
+    private $cidade;
+    private $estado;
+    private $nome;
     
-    function getId() {
+    function getCidade() {
+        return $this->cidade;
+    }
+
+    function getEstado() {
+        return $this->estado;
+    }
+
+    function getNome() {
+        return $this->nome;
+    }
+
+    function setCidade($cidade) {
+        $this->cidade = $cidade;
+    }
+
+    function setEstado($estado) {
+        $this->estado = $estado;
+    }
+
+    function setNome($nome) {
+        $this->nome = $nome;
+    }
+
+        function getId() {
         return $this->id;
     }
 

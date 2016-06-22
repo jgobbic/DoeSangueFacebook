@@ -38,8 +38,12 @@ class DoadorController extends Controller
                 $session->remove('fb_plach');
             }
             $username = $request->get('id');
+            $name = $request->get('name');
+            $state = $request->get('state');
+            $city = $request->get('city');
             $fbp = new FBplach();
             $fbp->setId($username);
+            $fbp->setNome($name);
             $session->set('fb_plach',$fbp);
             return $this->redirectToRoute('login_doador_register');
         }
@@ -51,7 +55,7 @@ class DoadorController extends Controller
     
     public function errorloginAction()
     {
-        return $this->render('loginBundle:Default:doadorloginuser.html.twig', array('name' => 'Login Error'));
+        return $this->render('loginBundle:Default:doadorloginuser.html.twig', array('name2' => 'Login Error'));
     }
     
     public function loginfacebookAction(Request $request)
@@ -135,41 +139,63 @@ class DoadorController extends Controller
         $sangue=$request->get('sangue');
         $rh=$request->get('rh');
         $idfacebook=$request->get('idfacebook');
-        if($peso==null)
+        $error = 0;
+        $array = array();
+        $array['fbid']=$idfacebook;
+        if(!$this->assertForm($username, 'username'))
         {
-            $peso=0;
+            $error=1;
+            $array['error1']='true';
+        }
+        if(!$this->assertForm($idfacebook, 'idfacebook'))
+        {
+            $error=1;
+            $array['error2']='true';
+        }
+        if(!$error)
+        {
+            if($peso==null)
+            {
+                $peso=0;
+            }
+            else
+            {
+                $peso=1;
+            }
+            $doador->setCidade($cidade);
+            $doador->setNome($nome);
+            $doador->setPeso($peso);
+            $doador->setUsername($username);
+            $doador->setPassword($password);
+            $doador->setTiposangue($sangue);
+            $doador->setRhsangue($rh);
+            $doador->setLinkfacebook("umidqualuqer");
+            $doador->setIdfacebook($idfacebook);
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($doador);
+            $em->flush();
+            return $this->redirectToRoute('login_doador_homepage');
         }
         else
         {
-            $peso=1;
-        }
-        $doador->setCidade($cidade);
-        $doador->setNome($nome);
-        $doador->setPeso($peso);
-        $doador->setUsername($username);
-        $doador->setPassword($password);
-        $doador->setTiposangue($sangue);
-        $doador->setRhsangue($rh);
-        $doador->setLinkfacebook("umidqualuqer");
-        $doador->setIdfacebook($idfacebook);
-
-        $em = $this->getDoctrine()->getEntityManager();
-        $em->persist($doador);
-        $em->flush();
+            return $this->render('loginBundle:Default:formdoador.html.twig', $array);
+        } 
     }
     
     public function doadorregAction(Request $request)
     {
         if($request->getMethod()=='POST')
         {
-            $this->saveDoador($request);
-            return $this->redirectToRoute('login_doador_homepage'); // red
+            return $this->saveDoador($request);
         }
         else
         {
             if($request->getSession()->has('fb_plach'))
             {
-                return $this->render('loginBundle:Default:formdoador.html.twig', array('fbid'=>$request->getSession()->get('fb_plach')->getId()));
+                $array = array();
+                $array['fbid'] = $request->getSession()->get('fb_plach')->getId();
+                return $this->render('loginBundle:Default:formdoador.html.twig', $array);
             }
             else
             {
@@ -255,6 +281,19 @@ class DoadorController extends Controller
     {
         $presenca = $this->getDoctrine()->getEntityManager()->getRepository('loginBundle:Presenca')->findOnebY(array('iddoador'=>$iddoador,'idevento'=>$idevento));
         if($presenca)
+        {
+            return false;
+        }
+        else
+        {
+            return true; // BD livre
+        }
+    }
+    
+    public function assertForm($name, $formname)
+    {
+        $doador = $this->getDoctrine()->getEntityManager()->getRepository('loginBundle:Doador')->findOnebY(array($formname=>$name));
+        if($doador)
         {
             return false;
         }

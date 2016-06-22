@@ -10,11 +10,11 @@
                     <div class="col-lg-6">
                         <hr>
                         <h2 class="intro-text text-center">
-                                                    {%if evento is null %}
-                                                    <strong>Registrar um Evento!</strong>
-                                                    {%else%}
-                                                    <strong>Editar um Evento!</strong>
-                                                    {%endif%}
+                            {%if evento is null %}
+                            <strong>Registrar um Evento!</strong>
+                            {%else%}
+                            <strong>Editar um Evento!</strong>
+                            {%endif%}
                         </h2>
                         <hr>
                         <p>
@@ -30,6 +30,15 @@
                                         <label>Nome*</label>
                                         <input type="text" name="nome" class="form-control" data-trigger="change" data-required="true">
                                     </div>
+                                    {% if error1 is defined%}
+                                        <div class="col-xs-12">
+                                            <div class="col-xs-2"></div>
+                                            <div class="col-xs-8 alert alert-danger fade in">
+                                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                <strong>Nome já cadastrado!</strong>
+                                            </div>
+                                        </div>
+                                    {%endif%}
                                     <div class="form-group col-lg-12">
                                         <label>Cidade*</label>
                                         <input type="text" name="cidade" class="form-control" data-trigger="change" data-required="true">
@@ -76,8 +85,9 @@
                                         <label>Descrição</label>
                                         <textarea type="text" cols="40" rows="12" id="descricao" class="form-control" name="descricao" data-trigger="change" ></textarea>
                                     </div>
+                                    <input type="hidden" class="form-control" data-trigger="change" name="edit" id="edit" value="-1"/>
                                     <div class="form-group col-lg-12">
-                                        <button type="submit" class="btn btn-default btn-block" name="edit" id="edit" value="-1">Registrar evento</button>
+                                        <button type="submit" class="btn btn-default btn-block" name="evid">Registrar evento</button>
                                     </div>
                                 </div>
                             {%else%}
@@ -86,6 +96,15 @@
                                     <label>Nome*</label>
                                     <input type="text" name="nome" id="nome" class="form-control" data-trigger="change" data-required="true" value="{{evento.getNome()}}">
                                 </div>
+                                {% if error2 is defined%}
+                                    <div class="col-xs-12">
+                                        <div class="col-xs-2"></div>
+                                        <div class="col-xs-8 alert alert-danger fade in">
+                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                            <strong>Nome já cadastrado!</strong>
+                                        </div>
+                                    </div>
+                                {%endif%}
                                 <div class="form-group col-lg-12">
                                     <label>Cidade*</label>
                                     <input type="text" name="cidade" class="form-control" data-trigger="change" data-required="true" value="{{evento.getCidade()}}">
@@ -132,9 +151,10 @@
                                     <label>Descrição</label>
                                     <textarea type="text" cols="40" rows="12" id="descricao" class="form-control" name="descricao" data-trigger="change">{{evento.getDescricao()}}</textarea>
                                 </div>
+                                <input type="hidden" class="form-control" data-trigger="change" name="edit" id="edit" value="1"/>
                                 <div class="form-group col-lg-12">
                                     <div class="form-group col-lg-6">
-                                        <button type="submit" class="btn btn-default btn-block" name="edit" id="edit" value="{{evento.getId()}}">Editar evento</button>
+                                        <button type="submit" class="btn btn-default btn-block" name="evid" id="evid" value="{{evento.getId()}}">Editar evento</button>
                                     </div>
                                 </div>
                             </div>
