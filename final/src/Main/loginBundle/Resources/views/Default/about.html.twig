@@ -1,4 +1,6 @@
-{%extends "loginBundle:Default:basic.html.twig"%}
+{% extends logged == 'logged' 
+    ? 'loginBundle:Default:basicentidade.html.twig' 
+    : 'loginBundle:Default:basic.html.twig' %}
 {%block container %}
     <div class="container">
 
@@ -17,7 +19,7 @@
                 <div class="col-md-6">
                     <p>Projeto de aplicativo doador de sangue da turma de
 						Engenharia de Software da Engenharia de Computação 2013 da USP São Carlos.</p>
-                    <p>Site ainda em construção, o projeto fora produzido utilizando Symfony e Bootstrap.</p>
+                    <p>O projeto fora produzido utilizando Symfony e Bootstrap.</p>
                     <p>Por favor entre em contato caso encontre alguma dificuldade!</p>
                 </div>
                 <div class="clearfix"></div>
@@ -35,51 +37,71 @@
                 </div>
 
                 <div class="col-sm-4 text-center">
-                    <img class="img-responsive" src="http://placehold.it/750x450" alt="">
+                    <img class="img-responsive" src="{{asset('bundles/login/img/leal.jpg')}}"  width="37%" height="37%" style='border-radius: 40px; display: block; margin: auto;'>
                     <h3>Lucas Hilário Favaro Leal
                         <small></small>
                     </h3>
+                    <p>Aluno de Graduação</p>
+                    <p>Universidade de São Paulo - USP</p>
+                    <p>Dept. EESC e ICMC</p>
                 </div>
 
                 <div class="col-sm-4 text-center">
-                    <img class="img-responsive" src="http://placehold.it/750x450" alt="">
+                    <img class="img-responsive" src="{{asset('bundles/login/img/gyor.jpg')}}" width="42%" height="42%" style='border-radius: 40px; display: block; margin: auto;'>
                     <h3>Gyordano Gadoni Reis
                         <small></small>
                     </h3>
+                    <p>Aluno de Graduação</p>
+                    <p>Universidade de São Paulo - USP</p>
+                    <p>Dept. EESC e ICMC</p>
                 </div>
 
-                <div class="col-sm-4 text-center">
-                    <img class="img-responsive" src="http://placehold.it/750x450" alt="">
-                    <h3>Bernardo Cardoso Rodrigues
-                        <small></small>
-                    </h3>
-                </div>
-
-                <div class="clearfix"></div>
+                
 
                 <div class="col-sm-4 text-center">
-                    <img class="img-responsive" src="http://placehold.it/750x450" alt="">
-                    <h3>João Pedro Gobbi Codognotto
-                        <small></small>
-                    </h3>
-                </div>
-
-                <div class="col-sm-4 text-center">
-                    <img class="img-responsive" src="http://placehold.it/750x450" alt="">
-                    <h3>Helder de Melo Mendes
-                        <small></small>
-                    </h3>
-                </div>
-
-                <div class="col-sm-4 text-center">
-                    <img class="img-responsive" src="http://placehold.it/750x450" alt="">
+                    <img class="img-responsive" src="{{asset('bundles/login/img/renan.jpg')}}" width="43%" height="43%" style='border-radius: 40px; display: block; margin: auto;'>
                     <h3>Renan Yochiro Kawamura
                         <small></small>
                     </h3>
+                    <p>Aluno de Graduação</p>
+                    <p>Universidade de São Paulo - USP</p>
+                    <p>Dept. EESC e ICMC</p>
+                </div> 
+                    
+                <div class="clearfix"></div>
+
+                <div class="col-sm-4 text-center">
+                    <img class="img-responsive" src="{{asset('bundles/login/img/gobbi.jpg')}}"  width="35%" height="35%" style='border-radius: 40px; display: block; margin: auto;'>
+                    <h3>João Pedro Gobbi Codognotto
+                        <small></small>
+                    </h3>
+                    <p>Aluno de Graduação</p>
+                    <p>Universidade de São Paulo - USP</p>
+                    <p>Dept. EESC e ICMC</p>
                 </div>
+
+                <div class="col-sm-4 text-center">
+                    <img class="img-responsive" src="{{asset('bundles/login/img/bernardo.jpg')}}"  width="35%" height="35%" style='border-radius: 40px; display: block; margin: auto;'>
+                    <h3>Bernardo Cardoso Rodrigues
+                        <small></small>
+                    </h3>
+                    <p>Aluno de Graduação</p>
+                    <p>Universidade de São Paulo - USP</p>
+                    <p>Dept. EESC e ICMC</p>
+                </div>
+                    
+                <div class="col-sm-4 text-center">
+                    <img class="img-responsive" src="{{asset('bundles/login/img/helder.jpg')}}"  width="36%" height="36%" style='border-radius: 40px; display: block; margin: auto;'>
+                    <h3>Helder de Melo Mendes
+                        <small></small>
+                    </h3>
+                    <p>Aluno de Graduação</p>
+                    <p>Universidade de São Paulo - USP</p>
+                    <p>Dept. EESC e ICMC</p>
+                </div>
+                
                 <div class="clearfix"></div>
             </div>
         </div>
-
     </div>
 {%endblock%}

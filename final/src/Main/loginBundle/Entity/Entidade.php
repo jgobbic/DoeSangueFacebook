@@ -22,6 +22,11 @@ class Entidade
     /**
      * @var string
      */
+    private $estado;
+
+    /**
+     * @var string
+     */
     private $cidade;
 
     /**
@@ -33,11 +38,6 @@ class Entidade
      * @var string
      */
     private $idfacebook;
-
-    /**
-     * @var string
-     */
-    private $linkfacebook;
 
     /**
      * @var string
@@ -99,6 +99,29 @@ class Entidade
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Set estado
+     *
+     * @param string $estado
+     * @return Entidade
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return string 
+     */
+    public function getEstado()
+    {
+        return $this->estado;
     }
 
     /**
@@ -168,29 +191,6 @@ class Entidade
     public function getIdfacebook()
     {
         return $this->idfacebook;
-    }
-
-    /**
-     * Set linkfacebook
-     *
-     * @param string $linkfacebook
-     * @return Entidade
-     */
-    public function setLinkfacebook($linkfacebook)
-    {
-        $this->linkfacebook = $linkfacebook;
-
-        return $this;
-    }
-
-    /**
-     * Get linkfacebook
-     *
-     * @return string 
-     */
-    public function getLinkfacebook()
-    {
-        return $this->linkfacebook;
     }
 
     /**

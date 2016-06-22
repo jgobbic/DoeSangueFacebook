@@ -15,18 +15,18 @@ DROP TABLE IF EXISTS `eventocred`;
 --
 
 CREATE
-  TABLE IF NOT EXISTS `DOADOR`
+  TABLE IF NOT EXISTS `doador`
   (
     ID		            INTEGER NOT NULL AUTO_INCREMENT,
     PASSWORD			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,  
     USERNAME			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
-    TIPOSANGUE          VARCHAR (2) COLLATE utf8_unicode_ci NOT NULL ,
-    RHSANGUE			CHAR (1) COLLATE utf8_unicode_ci NOT NULL ,
+    TIPOSANGUE          VARCHAR (10) COLLATE utf8_unicode_ci NOT NULL ,
+    RHSANGUE			CHAR (10) COLLATE utf8_unicode_ci NOT NULL ,
     PESO       			BOOLEAN NOT NULL ,
+    ESTADO      		VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
     CIDADE      		VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
     NOME				VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
     IDFACEBOOK			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
-    LINKFACEBOOK			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
     PRIMARY KEY ( ID )
    ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -37,15 +37,15 @@ CREATE
 --
 
 CREATE
-  TABLE IF NOT EXISTS `ENTIDADE`
+  TABLE IF NOT EXISTS `entidade`
   (
     ID     				INTEGER		  NOT NULL AUTO_INCREMENT,  
     PASSWORD			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,  
     EMAIL			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
+    ESTADO      		VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
     CIDADE      		VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
     NOME				VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
     IDFACEBOOK			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
-    LINKFACEBOOK		VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
     CNPJ				VARCHAR (18) COLLATE utf8_unicode_ci ,
     DESCRICAO			VARCHAR (500)	COLLATE utf8_unicode_ci  ,
     PRIMARY KEY ( ID )
@@ -56,7 +56,7 @@ CREATE
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `EVENTO`
+-- Estrutura da tabela `evento`
 --
 
 CREATE
@@ -65,6 +65,7 @@ CREATE
     ID     				INTEGER		  NOT NULL AUTO_INCREMENT,  
     NOME			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
     CIDADE      		VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
+    ESTADO      		VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
     RUA				VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
     BAIRRO			VARCHAR (100) COLLATE utf8_unicode_ci NOT NULL ,
     NUMERO				INTEGER		  NOT NULL ,

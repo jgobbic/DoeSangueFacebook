@@ -22,6 +22,11 @@ class Evento
     /**
      * @var string
      */
+    private $estado;
+
+    /**
+     * @var string
+     */
     private $rua;
 
     /**
@@ -119,6 +124,29 @@ class Evento
     public function getCidade()
     {
         return $this->cidade;
+    }
+
+    /**
+     * Set estado
+     *
+     * @param string $estado
+     * @return Evento
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return string 
+     */
+    public function getEstado()
+    {
+        return $this->estado;
     }
 
     /**

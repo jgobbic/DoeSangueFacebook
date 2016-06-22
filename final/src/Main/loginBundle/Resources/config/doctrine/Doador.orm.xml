@@ -4,7 +4,6 @@
     <unique-constraints>
       <unique-constraint name="USERNAME" columns="USERNAME"/>
       <unique-constraint name="IDFACEBOOK" columns="IDFACEBOOK"/>
-      <unique-constraint name="LINKFACEBOOK" columns="LINKFACEBOOK"/>
     </unique-constraints>
     <id name="id" type="integer" column="ID">
       <generator strategy="IDENTITY"/>
@@ -14,9 +13,9 @@
     <field name="tiposangue" type="string" column="TIPOSANGUE" length="2" nullable="false"/>
     <field name="rhsangue" type="string" column="RHSANGUE" length="1" nullable="false"/>
     <field name="peso" type="boolean" column="PESO" nullable="false"/>
+    <field name="estado" type="string" column="ESTADO" length="100" nullable="false"/>
     <field name="cidade" type="string" column="CIDADE" length="100" nullable="false"/>
     <field name="nome" type="string" column="NOME" length="100" nullable="false"/>
     <field name="idfacebook" type="string" column="IDFACEBOOK" length="100" nullable="false"/>
-    <field name="linkfacebook" type="string" column="LINKFACEBOOK" length="100" nullable="false"/>
   </entity>
 </doctrine-mapping>

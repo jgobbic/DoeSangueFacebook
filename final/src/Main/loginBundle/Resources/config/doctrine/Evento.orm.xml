@@ -9,6 +9,7 @@
     </id>
     <field name="nome" type="string" column="NOME" length="100" nullable="false"/>
     <field name="cidade" type="string" column="CIDADE" length="100" nullable="false"/>
+    <field name="estado" type="string" column="ESTADO" length="100" nullable="false"/>
     <field name="rua" type="string" column="RUA" length="100" nullable="false"/>
     <field name="bairro" type="string" column="BAIRRO" length="100" nullable="false"/>
     <field name="numero" type="integer" column="NUMERO" nullable="false"/>
