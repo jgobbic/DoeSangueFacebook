@@ -40,7 +40,9 @@ login_evento:
 login_eventolista:
     path: evento_lista/
     defaults: { _controller: loginBundle:Default:eventolista }
-    
+login_errorlogin:
+    path: login/f
+    defaults: { _controller: loginBundle:Default:errorlogin }
     
 login_doador_homepage:
     path: doar/index/

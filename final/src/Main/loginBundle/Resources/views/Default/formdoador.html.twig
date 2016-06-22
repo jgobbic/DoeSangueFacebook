@@ -242,8 +242,36 @@
                                     <input type="text" name="cidade" class="form-control" data-trigger="change" data-required="true">
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label>Estado*</label>
-                                    <input type="text" name="estado" class="form-control" data-trigger="change" data-required="true">
+                                    <label for="estado">Estado:*</label>
+                                        <select class="form-control" id="estado" name="estado" data-trigger="change" data-required="true">
+                                              <option value="ac">AC</option>	 
+                                              <option value="al">AL</option>	 
+                                              <option value="ap">AP</option>	 
+                                              <option value="am">AM</option>	 
+                                              <option value="ba">BA</option>	 
+                                              <option value="ce">CE</option>	 
+                                              <option value="df">DF</option>	 
+                                              <option value="es">ES</option>
+                                              <option value="go">GO</option>
+                                              <option value="ma">MA</option>
+                                              <option value="mt">MT</option>
+                                              <option value="ms">MS</option>
+                                              <option value="mg">MG</option>
+                                              <option value="pa">PA</option>
+                                              <option value="pb">PB</option>
+                                              <option value="pr">PR</option>
+                                              <option value="pe">PE</option>
+                                              <option value="pi">PI</option>
+                                              <option value="rj">RJ</option>
+                                              <option value="rn">RN</option>
+                                              <option value="rs">RS</option>
+                                              <option value="ro">RO</option>
+                                              <option value="rr">RR</option>
+                                              <option value="sc">SC</option>
+                                              <option value="sp">SP</option>
+                                              <option value="se">SE</option>	 
+                                              <option value="to">TO</option>
+                                        </select>
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label>Você tem mais do que 50 quilos?*</label>
@@ -312,8 +340,37 @@
                                     <input type="text" name="cidade" class="form-control" data-trigger="change" data-required="true">
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label>Estado*</label>
-                                    <input type="text" name="estado" class="form-control" data-trigger="change" data-required="true">
+                                    <label for="estado">Estado:*</label>
+                                        <select class="form-control" id="estado" name="estado" data-trigger="change" data-required="true">
+                                              <option selected disabled>Escolha aqui</option>
+                                              <option value="ac">AC</option>	 
+                                              <option value="al">AL</option>	 
+                                              <option value="ap">AP</option>	 
+                                              <option value="am">AM</option>	 
+                                              <option value="ba">BA</option>	 
+                                              <option value="ce">CE</option>	 
+                                              <option value="df">DF</option>	 
+                                              <option value="es">ES</option>
+                                              <option value="go">GO</option>
+                                              <option value="ma">MA</option>
+                                              <option value="mt">MT</option>
+                                              <option value="ms">MS</option>
+                                              <option value="mg">MG</option>
+                                              <option value="pa">PA</option>
+                                              <option value="pb">PB</option>
+                                              <option value="pr">PR</option>
+                                              <option value="pe">PE</option>
+                                              <option value="pi">PI</option>
+                                              <option value="rj">RJ</option>
+                                              <option value="rn">RN</option>
+                                              <option value="rs">RS</option>
+                                              <option value="ro">RO</option>
+                                              <option value="rr">RR</option>
+                                              <option value="sc">SC</option>
+                                              <option value="sp">SP</option>
+                                              <option value="se">SE</option>	 
+                                              <option value="to">TO</option>
+                                        </select>
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label>Você tem mais do que 50 quilos?*</label>
@@ -324,19 +381,23 @@
                                 <div class="clearfix"></div>
                                 <div class="form-group col-lg-6">
                                     <label for="sangue">Insira seu tipo sanguíneo:*</label>
-                                                                              <select class="form-control" id="sangue" name="sangue" data-trigger="change" data-required="true">
-                                                                                    <option>A</option>
-                                                                                    <option>B</option>
-                                                                                    <option>AB</option>
-                                                                                    <option>O</option>
-                                                                              </select>
+                                        <select class="form-control" id="sangue" name="sangue" data-trigger="change" data-required="true">
+                                            <option selected disabled>Escolha aqui</option>
+                                            <option>A</option>
+                                            <option>B</option>
+                                            <option>AB</option>
+                                            <option>O</option>
+                                            <option>Não sei</option>
+                                        </select>
                                 </div>
-                                                            <div class="form-group col-lg-6">
+                                <div class="form-group col-lg-6">
                                     <label for="rh">Insira seu RH:*</label>
-                                                                              <select class="form-control" id="rh" name="rh" data-trigger="change" data-required="true">
-                                                                                    <option>+</option>
-                                                                                    <option>-</option>
-                                                                              </select>
+                                        <select class="form-control" id="rh" name="rh" data-trigger="change" data-required="true">
+                                            <option selected disabled>Escolha aqui</option>
+                                            <option>+</option>
+                                            <option>-</option>
+                                            <option>Não sei</option>
+                                        </select>
                                 </div>
                                 <div class="form-group col-lg-12">
                                     <button type="submit" class="btn btn-default btn-block">Registrar</button>

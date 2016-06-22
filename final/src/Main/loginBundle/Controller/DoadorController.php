@@ -38,9 +38,6 @@ class DoadorController extends Controller
                 $session->remove('fb_plach');
             }
             $username = $request->get('id');
-            $name = $request->get('name');
-            $state = $request->get('state');
-            $city = $request->get('city');
             $fbp = new FBplach();
             $fbp->setId($username);
             $fbp->setNome($name);
@@ -176,7 +173,7 @@ class DoadorController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($doador);
             $em->flush();
-            return $this->redirectToRoute('login_doador_homepage');
+            return $this->render('loginBundle:Default:doadorregsucess.html.twig');  
         }
         else
         {

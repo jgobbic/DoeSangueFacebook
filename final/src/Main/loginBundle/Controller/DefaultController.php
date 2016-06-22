@@ -174,6 +174,20 @@ class DefaultController extends Controller
         return $arraytotal;
     }
     
+    public function bdhandlingPresenca($presenca)
+    {
+        $arraytotal = array();
+        foreach ($presenca as $row) {
+            $iddoador=$row->getIddoador();
+            $em = $this->getDoctrine()->getEntityManager();
+            $eventos = $em->getRepository('loginBundle:Doador');
+            $arraytotal[] = $eventos->findOneBy(array('id'=>$iddoador));
+        }
+        return $arraytotal;
+    }
+    
+   
+    
     public function getUserusername()
     {
         $session=$this->getRequest()->getSession();
@@ -266,9 +280,10 @@ class DefaultController extends Controller
     {
         $entidade = new Entidade();
         $cidade=$request->get('cidade');
+        $estado=$request->get('estado');
         $username=$request->get('username');
         $password=md5($request->get('password'));
-        $cnpj=$request->get('cnpj');    
+        //$cnpj=$request->get('cnpj');    
         $email=$request->get('email');    
         $descricao=$request->get('descricao'); 
         $idfacebook=$request->get('idfacebook'); 
@@ -295,18 +310,19 @@ class DefaultController extends Controller
         {
             $entidade->setPassword($password);
             $entidade->setCidade($cidade);
+            $entidade->setEstado($estado);
             $entidade->setNome($username);
             $entidade->setEmail($email);
             $entidade->setIdfacebook($idfacebook);
             $entidade->setEstado($estado);
-            $entidade->setCnpj($cnpj);
+            $entidade->setCnpj('aleatorio');
             $entidade->setDescricao($descricao);
 
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entidade);
             $em->flush();
             $request->getSession()->clear();
-            return $this->redirectToRoute('login_login');
+            return $this->render('loginBundle:Default:regsucess.html.twig');  
         }
         else
         {
@@ -382,6 +398,7 @@ class DefaultController extends Controller
                 $evento = new Evento();
                 $evento->setNome($nome);
                 $evento->setCidade($cidade);
+                $evento->setEstado($estado);
                 $evento->setRua($rua);
                 $evento->setBairro($bairro);
                 $evento->setNumero($numero);
@@ -405,9 +422,10 @@ class DefaultController extends Controller
             $editid = $request->get('evid');
             $evento = $em->getRepository('loginBundle:Evento')->findOneBy(array('id'=>$editid));
             if($this->assertForm($nome,'nome','loginBundle:Evento'))
-            {
+            { // mudou pra um nome novo
                 $evento->setNome($nome);
                 $evento->setCidade($cidade);
+                $evento->setEstado($estado);
                 $evento->setRua($rua);
                 $evento->setBairro($bairro);
                 $evento->setNumero($numero);
@@ -422,9 +440,10 @@ class DefaultController extends Controller
             else
             {
                 if($nome == $evento->getNome())
-                {
+                {  // nao mudou o nome
                     $evento->setNome($nome);
                     $evento->setCidade($cidade);
+                    $evento->setEstado($estado);
                     $evento->setRua($rua);
                     $evento->setBairro($bairro);
                     $evento->setNumero($numero);
@@ -444,7 +463,7 @@ class DefaultController extends Controller
         } 
         $em->flush();
         $this->saveEventocred($request); 
-        return $this->redirectToRoute('login_eventolista');
+        return $this->render('loginBundle:Default:evenregsucess.html.twig');
     }
     
     public function saveEventocred(Request $request)
@@ -547,5 +566,7 @@ class DefaultController extends Controller
             return $this->render('loginBundle:Default:about.html.twig', array('logged'=>'notlogged'));  
         }
     }
+    
+     
 }
 
