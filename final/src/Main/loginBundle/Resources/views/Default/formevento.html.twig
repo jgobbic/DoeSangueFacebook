@@ -28,7 +28,7 @@
                                 <div class="row">
                                     <div class="form-group col-lg-12">
                                         <label>Nome*</label>
-                                        <input type="text" name="nome" class="form-control" data-trigger="change" data-required="true">
+                                        <input type="text" name="nome" class="form-control" data-trigger="change" data-required="true" minlength="2">
                                     </div>
                                     {% if error1 is defined%}
                                         <div class="col-xs-12">
@@ -41,7 +41,7 @@
                                     {%endif%}
                                     <div class="form-group col-lg-6">
                                         <label>Cidade*</label>
-                                        <input type="text" name="cidade" class="form-control" data-trigger="change" data-required="true">
+                                        <input type="text" name="cidade" class="form-control" data-trigger="change" data-required="true" minlength="2">
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label for="estado">Estado:*</label>
@@ -78,7 +78,7 @@
                                     </div>
                                     <div class="form-group col-lg-9">
                                         <label>Rua*</label>
-                                        <input type="text" name="rua" class="form-control" data-trigger="change" data-required="true">
+                                        <input type="text" name="rua" class="form-control" data-trigger="change" data-required="true" minlength="2">
                                     </div>
                                     <div class="form-group col-lg-3">
                                         <label>Número*</label>
@@ -86,7 +86,7 @@
                                     </div>
                                     <div class="form-group col-lg-12">
                                         <label>Bairro*</label>
-                                        <input type="text" name="bairro" class="form-control" data-trigger="change" data-required="true">
+                                        <input type="text" name="bairro" class="form-control" data-trigger="change" data-required="true" minlength="2">
                                     </div>
                                     <div class="form-group col-lg-12">
                                         <label>Complemento</label>
@@ -127,7 +127,7 @@
                                 <div class="row">
                                 <div class="form-group col-lg-12">
                                     <label>Nome*</label>
-                                    <input type="text" name="nome" id="nome" class="form-control" data-trigger="change" data-required="true" value="{{evento.getNome()}}">
+                                    <input type="text" name="nome" id="nome" class="form-control" data-trigger="change" data-required="true" value="{{evento.getNome()}}" minlength="2">
                                 </div>
                                 {% if error2 is defined%}
                                     <div class="col-xs-12">
@@ -140,7 +140,7 @@
                                 {%endif%}
                                 <div class="form-group col-lg-6">
                                     <label>Cidade*</label>
-                                    <input type="text" name="cidade" class="form-control" data-trigger="change" data-required="true" value="{{evento.getCidade()}}">
+                                    <input type="text" name="cidade" class="form-control" data-trigger="change" data-required="true" value="{{evento.getCidade()}}" minlength="2">
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <label for="estado">Estado:*</label>
@@ -176,7 +176,7 @@
                                 </div>
                                 <div class="form-group col-lg-9">
                                     <label>Rua*</label>
-                                    <input type="text" name="rua" class="form-control" data-trigger="change" data-required="true" value="{{evento.getRua()}}">
+                                    <input type="text" name="rua" class="form-control" data-trigger="change" data-required="true" value="{{evento.getRua()}}" minlength="2">
                                 </div>
                                 <div class="form-group col-lg-3">
                                     <label>Número*</label>
@@ -184,7 +184,7 @@
                                 </div>
                                 <div class="form-group col-lg-12">
                                     <label>Bairro*</label>
-                                    <input type="text" name="bairro" class="form-control" data-trigger="change" data-required="true" value="{{evento.getBairro()}}">
+                                    <input type="text" name="bairro" class="form-control" data-trigger="change" data-required="true" value="{{evento.getBairro()}}" minlength="2">
                                 </div>
                                 <div class="form-group col-lg-12">
                                     <label>Complemento</label>
