@@ -12,6 +12,26 @@ use Main\loginBundle\Modals\IDplach;
 
 class DoadorController extends Controller
 {
+    
+    public function sendNotification($recipientFbid, $text, $url) {
+        $app_id = '624500901036721';
+        $app_secret = '86e1ef8f863c3c6ed359342d6810087d';
+        define("FB_APP_TOKEN", $app_id . "|" . $app_secret );
+        $href = urlencode($url);
+        $post_data = "access_token=". FB_APP_TOKEN ."&template={$text}&href={$href}";
+
+        $curl = curl_init();
+
+        curl_setopt($curl, CURLOPT_URL, "https://graph.facebook.com/v2.1/". $recipientFbid ."/notifications");
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        $data = curl_exec($curl);
+        curl_close($curl);
+        }
+
+    
+    
+  
     public function indexAction()
     {
         if($this->isLogged())
@@ -40,7 +60,7 @@ class DoadorController extends Controller
             $username = $request->get('id');
             $fbp = new FBplach();
             $fbp->setId($username);
-            $fbp->setNome($name);
+           
             $session->set('fb_plach',$fbp);
             return $this->redirectToRoute('login_doador_register');
         }
@@ -310,14 +330,28 @@ class DoadorController extends Controller
             $repository = $em->getRepository('loginBundle:Evento');
             $id=$iddoevento;
             $evento = $repository->findOneBy(array('id'=>$id));
+            
+            
+            
+            $nomeevento = $evento->getNome();
+            $data = $evento->getDatainicio();
+            
+            $data = $data->format('d-m-Y');
+            
+            
             if($evento)
             {
                 if($request->getMethod()=='POST')
                 {
                     $iddoador=$this->getUserOnline()->getID();
+                    
+                    $iddofb = $em->getRepository('loginBundle:Doador')->findOneBy(array('id'=>$iddoador))->getIdfacebook();
+                    
                     if($this->assertPresenca($iddoador, $id))
                     {
                         $this->savePresenca($iddoador,$id);
+                        $this->sendNotification($iddofb, "Obrigado por confirmar sua presença em ".$nomeevento."! Lembre-se: o evento começa em ".$data, "teste");
+                        
                     }
                     return $this->render('loginBundle:Default:confirmarpresenca.html.twig', 
                             array('id'=> $id,'datafim'=> $evento->getDatafim()->format('m-d'),
