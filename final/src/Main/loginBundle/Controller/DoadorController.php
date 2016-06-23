@@ -40,7 +40,6 @@ class DoadorController extends Controller
             $username = $request->get('id');
             $fbp = new FBplach();
             $fbp->setId($username);
-            $fbp->setNome($name);
             $session->set('fb_plach',$fbp);
             return $this->redirectToRoute('login_doador_register');
         }
